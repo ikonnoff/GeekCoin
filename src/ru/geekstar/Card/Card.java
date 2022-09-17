@@ -1,4 +1,4 @@
-package ru.geekstar;
+package ru.geekstar.Card;
 
 public class Card {
 
