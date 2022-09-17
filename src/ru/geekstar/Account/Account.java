@@ -112,7 +112,14 @@ public class Account {
         this.countDepositingTransactions = countDepositingTransactions;
     }
 
+    // Пополнить баланс
+    public boolean topUP(float sum) {
+        balance += sum;
+        return true;
+    }
 
-
-
+    // Добавить транзакцию о пополнении
+    public void addDepositingTransaction(DepositingTransaction depositingTransaction) {
+        depositingTransactions[countDepositingTransactions++] = depositingTransaction;
+    }
 }

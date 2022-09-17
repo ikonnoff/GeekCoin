@@ -1,5 +1,6 @@
 package ru.geekstar.Bank;
 
+import ru.geekstar.Card.Card;
 import ru.geekstar.ClientProfile.SberPhysicalPersonProfile;
 
 public class Bank {
@@ -61,4 +62,27 @@ public class Bank {
         return numberAccountBuffer.toString();
     }
 
+    // Провести авторизацию и выдать разрешение на проведение операции
+    public String authorization(Card card) {
+        // TODO: сгенерировать код авторизации
+        String authorizationCode = generateAuthorizationCode();
+
+        String authorizationMessage;
+        // TODO: проверить статус карты
+        boolean statusCard = card.getStatusCard().equalsIgnoreCase("Активна") ? true : false;
+        if (statusCard) authorizationMessage = "Success: Карта активна";
+        else authorizationMessage = "Failed: Карта заблокирована";
+
+        // TODO: вернуть код и сообщение о статусе авторизации
+        return authorizationCode + "@" + authorizationMessage;
+    }
+
+    private String generateAuthorizationCode() {
+        byte lengthAuthorizationCode = 6;
+        StringBuffer authorizationCodeBuffer = new StringBuffer();
+        for (byte i = 0; i < lengthAuthorizationCode; i++) {
+            authorizationCodeBuffer.append((byte) Math.random() * 10);
+        }
+        return authorizationCodeBuffer.toString();
+    }
 }

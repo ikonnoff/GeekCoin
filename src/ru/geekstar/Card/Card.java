@@ -4,6 +4,9 @@ import ru.geekstar.Account.SberPayCardAccount;
 import ru.geekstar.Account.SberSavingsAccount;
 import ru.geekstar.Bank.Sberbank;
 import ru.geekstar.ClientProfile.SberPhysicalPersonProfile;
+import ru.geekstar.Transaction.DepositingTransaction;
+
+import java.time.LocalDateTime;
 
 public class Card {
 
@@ -83,18 +86,45 @@ public class Card {
 
     // Внести наличные на карту
     public void depositingCash2Card(float sumDepositing) {
-        // TODO: инициализировать транзакцию пополнения
+        // инициализировать транзакцию пополнения
+        DepositingTransaction depositingTransaction = new DepositingTransaction();
+        depositingTransaction.setLocalDateTime(LocalDateTime.now());
+        depositingTransaction.setToCard((SberVisaGold) this);
+        depositingTransaction.setSum(sumDepositing);
+        depositingTransaction.setCurrencySymbol(payCardAccount.getCurrencySymbol());
+        depositingTransaction.setTypeOperation("Внесение наличных");
 
-        // TODO: запросить разрешение банка на проведение операции с проверкой статуса карты
+        // запросить разрешение банка на проведение операции с проверкой статуса карты
+        String authorization = bank.authorization(this);
+        // извлекаем массив строк разделяя их символом @
+        String[] authorizationData = authorization.split("@");
+        // извлекаем код авторизации
+        String authorizationCode = authorizationData[0];
+        // вносим в транзакцию код авторизации
+        depositingTransaction.setAuthorizationCode(authorizationCode);
+        // извлекаем сообщение из авторизации
+        String authorizationMessage = authorizationData[1];
+        // извлекаем статус из сообщения авторизации
+        String authorizationStatus = authorizationMessage.substring(0, authorizationMessage.indexOf(":"));
 
-        // TODO: если разрешение получено, то выполняем пополнение
+        // если разрешение получено, то выполняем пополнение
+        if (authorizationStatus.equalsIgnoreCase("Success")) {
+            boolean topUpStatus = payCardAccount.topUP(sumDepositing);
+            if (topUpStatus) {
+                // внести в транзакцию статус пополнения
+                depositingTransaction.setStatusOperation("Внесение наличных прошло успешно");
+            } else depositingTransaction.setStatusOperation("Внесение наличных не прошло");
+        } else {
+            // иначе выводим сообщение о статусе авторизации, чтобы понимать что пошло не так
+            String authorizationStatusMessage = authorizationMessage.substring(authorizationMessage.indexOf(":"));
+            depositingTransaction.setStatusOperation(authorizationStatusMessage);
+        }
 
-        // TODO: внести в транзакцию статус пополнения
-
-        // TODO: внести в транзакцию баланс карты после пополнения
+        // внести в транзакцию баланс карты после пополнения
+        depositingTransaction.setBalance(getPayCardAccount().getBalance());
 
         // TODO: добавить и привязать транзакцию пополнения к счёту карты зачисления
-
+        payCardAccount.addDepositingTransaction(depositingTransaction);
     }
 
     // Пополнить карту с карты
