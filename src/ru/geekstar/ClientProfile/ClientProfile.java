@@ -126,4 +126,19 @@ public class ClientProfile {
     public void setLimitCommissionTransferInUsdOrEquivalentInOtherCurrency(float limitCommissionTransferInUsdOrEquivalentInOtherCurrency) {
         this.limitCommissionTransferInUsdOrEquivalentInOtherCurrency = limitCommissionTransferInUsdOrEquivalentInOtherCurrency;
     }
+
+    // Проверить не превышен ли лимит по оплатам и переводам в сутки
+    public boolean exceededLimitPaymentsTransfersDay(float sum, String currencyCode) {
+        if (currencyCode.equals("RUB") && totalPaymentsTransfersDayInRUB + sum > limitPaymentsTransfersDayInRUB) return true;
+        if (currencyCode.equals("USD") && totalPaymentsTransfersDayInUSD + sum > limitPaymentsTransfersDayInUSD) return true;
+        if (currencyCode.equals("EUR") && totalPaymentsTransfersDayInEUR + sum > limitPaymentsTransfersDayInEUR) return true;
+        return false;
+    }
+
+    // Прибавить сумму оплаты или перевода к общей сумме совершённых оплат и переводов в сутки
+    public void updateTotalPaymentsTransfersDay(float sum, String currencyCode) {
+        if (currencyCode.equals("RUB")) totalPaymentsTransfersDayInRUB += sum;
+        if (currencyCode.equals("USD")) totalPaymentsTransfersDayInUSD += sum;
+        if (currencyCode.equals("EUR")) totalPaymentsTransfersDayInEUR += sum;
+    }
 }

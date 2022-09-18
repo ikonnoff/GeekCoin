@@ -61,4 +61,22 @@ public class PayCardAccount extends Account {
         cards[countCards++] = card;
     }
 
+    public boolean blockSum(float sum) {
+        // сохранить сумму на счёте как зарезервированную
+        blockedSum += sum;
+        // и списать зарезервированную сумму со счёта, чтобы её нельзя было использовать одновременно при совершении других операций
+        withdrawal(sum);
+        return true;
+    }
+
+    // Списать зарезервированную сумму со счёта карты
+    public boolean writeOffBlockedSum(float sum) {
+        blockedSum -= sum;
+        return true;
+    }
+
+    // Добавить транзакцию об оплате
+    public void addPayTransaction(PayTransaction payTransaction) {
+        payTransactions[countPayTransactions++] = payTransaction;
+    }
 }

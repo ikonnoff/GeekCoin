@@ -84,4 +84,8 @@ public class PhysicalPerson {
     public void depositingCash2Card(SberVisaGold toCard, float sumDepositing) {
         toCard.depositingCash2Card(sumDepositing);
     }
+
+    public void payByCard(SberVisaGold card, float sumPay, String buyProductOrService) {
+        card.payByCard(sumPay, buyProductOrService);
+    }
 }

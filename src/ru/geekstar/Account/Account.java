@@ -75,9 +75,15 @@ public class Account {
         return balance;
     }
 
-    public void setBalance(float balance) {
-        if (balance >= 0) this.balance = balance;
-        else System.out.println("Отрицательное недопустимое значение баланса: " + balance);
+    public boolean setBalance(float balance) {
+        if (balance >= 0) {
+            this.balance = balance;
+            return true;
+        }
+        else {
+            System.out.println("Отрицательное недопустимое значение баланса: " + balance);
+            return false;
+        }
     }
 
     public TransferTransaction[] getTransferTransactions() {
@@ -114,7 +120,7 @@ public class Account {
 
     // Пополнить баланс
     public boolean topUP(float sum) {
-        balance += sum;
+        setBalance(balance + sum);
         return true;
     }
 
@@ -122,4 +128,28 @@ public class Account {
     public void addDepositingTransaction(DepositingTransaction depositingTransaction) {
         depositingTransactions[countDepositingTransactions++] = depositingTransaction;
     }
+
+    // Проверить достаточно ли денег на балансе
+    public boolean checkBalance(float sum) {
+        if (sum <= balance) return true;
+        return false;
+    }
+
+    // Списать средства в три попытки в случае сбоя
+    public boolean withdrawal(float sum) {
+        boolean writeOffStatus;
+        byte errorTransaction = 0;
+        do {
+            writeOffStatus = writeOff(sum);
+            if (!writeOffStatus) errorTransaction++;
+        } while (!writeOffStatus && errorTransaction < 3);
+
+        return writeOffStatus;
+    }
+
+    // Списать со счёта
+    private boolean writeOff(float sum) {
+        return setBalance(balance - sum);
+    }
+
 }
