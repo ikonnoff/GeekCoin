@@ -188,7 +188,7 @@ public class Card {
 
     // Вывести транзакции по счёту карты
     public void displayCardTransactions() {
-
+        payCardAccount.displayAccountTransactions();
     }
 
 

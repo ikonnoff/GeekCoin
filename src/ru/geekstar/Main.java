@@ -41,6 +41,12 @@ public class Main {
 
         I.payByCard(mySberVisaGold1, 100.50f, "ЖКХ");
 
+        // Вывод операций по карте
+        I.displayCardTransactions(mySberVisaGold1);
+
+        // Вывод операций по счёту
+
+        // Вывод всех операций по всем картам и счетам профиля клиента
 
     }
 }

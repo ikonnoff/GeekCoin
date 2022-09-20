@@ -47,7 +47,7 @@ public class Bank {
         byte lengthNumberCard = 20;
         StringBuffer numberCardBuffer = new StringBuffer();
         for (byte i = 1; i < lengthNumberCard; i++) {   // i = 1, чтобы не было пробела в начале, потому что при делении 0 на 5 будет 0
-            if (i % 5 != 0) numberCardBuffer.append((byte) Math.random() * 10);
+            if (i % 5 != 0) numberCardBuffer.append((byte) (Math.random() * 10));
             else numberCardBuffer.append(' ');
         }
         return numberCardBuffer.toString();
@@ -58,7 +58,7 @@ public class Bank {
         byte lengthNumberAccount = 20;
         StringBuffer numberAccountBuffer = new StringBuffer();
         for (byte i = 0; i < lengthNumberAccount; i++) {
-            numberAccountBuffer.append((byte) Math.random() * 10);
+            numberAccountBuffer.append((byte) (Math.random() * 10));
         }
         return numberAccountBuffer.toString();
     }
@@ -98,7 +98,7 @@ public class Bank {
         byte lengthAuthorizationCode = 6;
         StringBuffer authorizationCodeBuffer = new StringBuffer();
         for (byte i = 0; i < lengthAuthorizationCode; i++) {
-            authorizationCodeBuffer.append((byte) Math.random() * 10);
+            authorizationCodeBuffer.append((byte) (Math.random() * 10));
         }
         return authorizationCodeBuffer.toString();
     }

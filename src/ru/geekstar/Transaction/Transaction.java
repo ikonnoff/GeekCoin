@@ -1,5 +1,8 @@
 package ru.geekstar.Transaction;
 
+import ru.geekstar.Account.SberSavingsAccount;
+import ru.geekstar.Card.SberVisaGold;
+
 import java.time.LocalDateTime;
 
 public class Transaction {
@@ -19,6 +22,14 @@ public class Transaction {
     private String typeOperation;
 
     private String statusOperation;
+
+    private SberVisaGold toCard;
+
+    private SberVisaGold fromCard;
+
+    private SberSavingsAccount toAccount;
+
+    private SberSavingsAccount fromAccount;
 
 
     public LocalDateTime getLocalDateTime() {
@@ -85,7 +96,62 @@ public class Transaction {
         this.statusOperation = statusOperation;
     }
 
+    public SberVisaGold getToCard() {
+        return toCard;
+    }
 
+    public void setToCard(SberVisaGold toCard) {
+        this.toCard = toCard;
+    }
 
+    public SberVisaGold getFromCard() {
+        return fromCard;
+    }
 
+    public void setFromCard(SberVisaGold fromCard) {
+        this.fromCard = fromCard;
+    }
+
+    public SberSavingsAccount getToAccount() {
+        return toAccount;
+    }
+
+    public void setToAccount(SberSavingsAccount toAccount) {
+        this.toAccount = toAccount;
+    }
+
+    public SberSavingsAccount getFromAccount() {
+        return fromAccount;
+    }
+
+    public void setFromAccount(SberSavingsAccount fromAccount) {
+        this.fromAccount = fromAccount;
+    }
+
+    public String getRecipient() {
+        String recipient = "";
+        if (toCard != null) recipient = getNameCard(toCard);
+        if (toAccount != null) recipient = getNameAccount(toAccount);
+        return recipient;
+    }
+
+    public String getSender() {
+        String sender = "";
+        if (fromCard != null) sender = getNameCard(fromCard);
+        if (fromAccount != null) sender = getNameAccount(fromAccount);
+        return sender;
+    }
+
+    public String getNameCard(SberVisaGold card) {
+        return card.getBank().getBankName() + "Карта " + card.getClass().getSimpleName() + " ⦁⦁" + card.getNumberCard().split(" ")[3];
+    }
+
+    public String getNameAccount(SberSavingsAccount account) {
+        return account.getBank().getBankName() + "Счёт ⦁⦁" + account.getNumberAccount().substring(16);
+    }
+
+    // Вывести транзакции в строковом человекочитаемом формате
+    public String getStringTransaction() {
+        return null;
+    }
 }

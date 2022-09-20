@@ -1,21 +1,9 @@
 package ru.geekstar.Transaction;
 
-import ru.geekstar.Card.SberVisaGold;
-
 public class PayTransaction extends Transaction {
-
-    private SberVisaGold fromCard;
 
     private String buyProductOrService;
 
-
-    public SberVisaGold getFromCard() {
-        return fromCard;
-    }
-
-    public void setFromCard(SberVisaGold fromCard) {
-        this.fromCard = fromCard;
-    }
 
     public String getBuyProductOrService() {
         return buyProductOrService;
@@ -24,4 +12,19 @@ public class PayTransaction extends Transaction {
     public void setBuyProductOrService(String buyProductOrService) {
         this.buyProductOrService = buyProductOrService;
     }
+
+
+    @Override
+    public String getStringTransaction() {
+        String consumer = getNameCard(getFromCard());
+
+        String transaction = getLocalDateTime() + " " + consumer + " " + getTypeOperation() + " " + buyProductOrService + ": " + getSum() + getCurrencySymbol() +
+                " Статус: " + getStatusOperation() + " Баланс: " + getBalance() + getCurrencySymbol() + " Комиссия составила: " + getCommission() +
+                getCurrencySymbol() + " Код авторизации: " + getAuthorizationCode();
+
+        return transaction;
+
+    }
+
+
 }
