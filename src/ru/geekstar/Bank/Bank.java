@@ -108,4 +108,29 @@ public class Bank {
         float commission = buyProductOrService.equalsIgnoreCase("ЖКХ") ? (sumPay/100) * cardHolder.getPercentOfCommissionForPayHousingCommunalServices() : 0;
         return commission;
     }
+
+    // Запросить код валюты по названию страны
+    public String getCurrencyCode(String country) {
+        String currencyPayCode = null;
+        if (country.equalsIgnoreCase("Турция")) currencyPayCode = "TRY";
+        if (country.equalsIgnoreCase("Франция")) currencyPayCode = "EUR";
+        return currencyPayCode;
+    }
+
+    // Конвертировать в валюту по курсу банка
+    public float convertToCurrencyExchangeRateBank(float sum, String fromCurrencyCode, String toCurrencyCode) {
+        float exchangeRateToCardCurrency = getExchangeRateBank(fromCurrencyCode, toCurrencyCode);
+        float sumInCardCurrency = sum * exchangeRateToCardCurrency;
+
+        return sumInCardCurrency;
+    }
+
+    // Предоставить обменный курс валют банка. Переопределим в каждом банке, потому что у каждого банка свой курс
+    public float getExchangeRateBank(String currency, String currencyExchangeRate) {
+        return 0;
+    }
+
+    public float round(float sum) {
+        return Math.round(sum * 100) / 100;
+    }
 }

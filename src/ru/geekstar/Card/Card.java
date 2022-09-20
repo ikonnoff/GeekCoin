@@ -120,7 +120,38 @@ public class Card {
 
     // Оплатить картой за рубежом
     public void payByCard(float sumPay, String buyProductOrService, String country) {
+        // по названию страны определяем валюту покупки
+        String currencyPayCode = bank.getCurrencyCode(country);
+        // по названию страны определяем валюту биллинга - это валюта платёжной системы
+        String billingCurrencyCode = getCurrencyCodePaySystem(country);
 
+        // если валюта покупки и валюта биллинга НЕ совпадают, то конвертируем сумму покупки в валюту платёжной системы по курсу платёжной системы
+        // если валюты совпадают, то конвертация не выполняется
+        float sumPayInBillingCurrency = !currencyPayCode.equals(billingCurrencyCode) ? convertToCurrencyExchangeRatePaySystem(sumPay, currencyPayCode, billingCurrencyCode) : sumPay;
+
+        // если валюта биллинга и валюта счёта карты не совпадают, то конвертируем сумму покупки в валюте биллинга в валюту карты по курсу нашего банка
+        // если валюты совпадают, то конвертация не выполняется
+        String cardCurrencyCode = getPayCardAccount().getCurrencyCode();
+        float sumPayInCardCurrency = !billingCurrencyCode.equals(cardCurrencyCode) ? bank.convertToCurrencyExchangeRateBank(sumPayInBillingCurrency, billingCurrencyCode, cardCurrencyCode) : sumPayInBillingCurrency;
+
+        // округлим дробную часть до двух знаков после запятой
+        sumPayInCardCurrency = bank.round(sumPayInCardCurrency);
+
+        // приведя сумму покупки к валюте карты вызываем метод оплаты по умолчанию
+        payByCard(sumPayInCardCurrency, buyProductOrService);
+
+    }
+
+    // Конвертировать в валюту по курсу платёжной системы
+    // Переопределим в дочерних классах, потому что у платёжных систем разные алгоритмы конвертации
+    public float convertToCurrencyExchangeRatePaySystem(float sum, String fromCurrencyCode, String toBillingCurrencyCode) {
+        return 0;
+    }
+
+    // Запросить код валюты платёжной системы
+    // Переопределим в дочерних классах, потому что нет общего алгоритма, так как у платёжных систем разные валюты
+    public String getCurrencyCodePaySystem(String country) {
+        return null;
     }
 
     // Перевести с карты на карту

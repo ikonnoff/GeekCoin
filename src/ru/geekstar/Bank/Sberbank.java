@@ -88,4 +88,17 @@ public class Sberbank extends Bank {
 
         return account;
     }
+
+    @Override
+    // Предоставить обменный курс валют Сбера
+    public float getExchangeRateBank(String currency, String currencyExchangeRate) {
+        // TODO: Запрос к API банка
+        float exchangeRateBank = 0;
+        // курс доллара к рублю
+        if (currency.equals("USD") && currencyExchangeRate.equals("RUB")) exchangeRateBank = 60.48f;
+        // курс евро к рублю
+        if (currency.equals("EUR") && currencyExchangeRate.equals("RUB")) exchangeRateBank = 61.35f;
+        return exchangeRateBank;
+    }
+
 }
