@@ -135,7 +135,7 @@ public class ClientProfile {
         return false;
     }
 
-    // Прибавить сумму оплаты или перевода к общей сумме совершённых оплат и переводов в сутки
+    // Прибавить сумму оплаты к общей сумме совершённых оплат и переводов в сутки
     public void updateTotalPaymentsTransfersDay(float sum, String currencyCode) {
         if (currencyCode.equals("RUB")) totalPaymentsTransfersDayInRUB += sum;
         if (currencyCode.equals("USD")) totalPaymentsTransfersDayInUSD += sum;

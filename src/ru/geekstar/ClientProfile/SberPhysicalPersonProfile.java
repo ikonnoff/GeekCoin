@@ -22,4 +22,11 @@ public class SberPhysicalPersonProfile extends PhysicalPersonProfile {
     public void setTotalTransfersToClientSberWithoutCommissionMonthInRUB(float totalTransfersToClientSberWithoutCommissionMonthInRUB) {
         this.totalTransfersToClientSberWithoutCommissionMonthInRUB = totalTransfersToClientSberWithoutCommissionMonthInRUB;
     }
+
+
+    // Проверить не превышен ли лимит по переводам клиентам Сбера в месяц
+    public boolean exceededLimitTransfersToClientSberWithoutCommissionMonthInRUB(float sumTransfer) {
+        if (totalTransfersToClientSberWithoutCommissionMonthInRUB + sumTransfer > limitTransfersToClientSberWithoutCommissionMonthInRUB) return true;
+        return false;
+    }
 }

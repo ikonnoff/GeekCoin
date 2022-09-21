@@ -96,4 +96,8 @@ public class PhysicalPerson {
     public void displayCardTransactions(SberVisaGold card) {
         card.displayCardTransactions();
     }
+
+    public void transferCard2Card(SberVisaGold fromCard, SberVisaGold toCard, float sumTransfer) {
+        fromCard.transferCard2Card(toCard, sumTransfer);
+    }
 }

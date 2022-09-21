@@ -131,6 +131,11 @@ public class Account {
         depositingTransactions[countDepositingTransactions++] = depositingTransaction;
     }
 
+    // Добавить транзакцию перевода
+    public void addTransferTransaction(TransferTransaction transferTransaction) {
+        transferTransactions[countTransferTransactions++] = transferTransaction;
+    }
+
     // Проверить достаточно ли денег на балансе
     public boolean checkBalance(float sum) {
         if (sum <= balance) return true;

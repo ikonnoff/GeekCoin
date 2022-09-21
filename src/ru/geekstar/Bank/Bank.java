@@ -109,6 +109,71 @@ public class Bank {
         return commission;
     }
 
+    // Рассчитать комиссию за перевод на свою или чужую карту моего или другого банка
+    public float getCommission(SberPhysicalPersonProfile clientProfile, String fromCurrencyCode, float sum, SberVisaGold toCard) {
+        // запросить моя ли карта, на которую выполняем перевод
+        boolean isMyCard = clientProfile.isClientCard(toCard);
+        // запросить моего ли банка карта, на которую выполняем перевод
+        boolean isCardMyBank = isCardBank(toCard);
+
+        float commission = 0;
+        // если карта зачисления не моя, но моего банка, то вычисляем комиссию за перевод клиенту моего банка
+        if (!isMyCard && isCardMyBank) commission = getCommissionOfTransferToClientBank(clientProfile, sum, fromCurrencyCode);
+        // если карта зачисления не моя и не моего банка, то вычисляем комиссию за перевод клиенту другого банка
+        if (!isMyCard && !isCardMyBank) commission = getCommissionOfTransferToClientAnotherBank(clientProfile, sum, fromCurrencyCode);
+
+        // проверить превышен ли лимит на сумму комиссии. Если да, то ограничим сумму комиссии заданным лимитом
+        commission = exceededLimitCommission(clientProfile, fromCurrencyCode, commission);
+
+        return commission;
+    }
+
+    // Проверить превышен ли лимит на сумму комиссии? Если да, то ограничим сумму комиссии лимитом
+    private float exceededLimitCommission(SberPhysicalPersonProfile clientProfile, String fromCurrencyCode, float commission) {
+        // если комиссия превышает лимит за перевод в рублях, то ограничим комиссию лимитом в рублях, то есть максимально возможной суммой комиссии установленной банком
+        if (fromCurrencyCode.equals("RUB") && commission > clientProfile.getLimitCommissionTransferInRUB()) commission = clientProfile.getLimitCommissionTransferInRUB();
+        // иначе если комиссия превышает лимит за перевод в $, то ограничим комиссию лимитом в $
+        else if (fromCurrencyCode.equals("USD") && commission > clientProfile.getLimitCommissionTransferInUsdOrEquivalentInOtherCurrency())
+            commission = clientProfile.getLimitCommissionTransferInUsdOrEquivalentInOtherCurrency();
+        // иначе если другая валюта, то по аналогии
+        else {
+            // рассчитать лимит комиссии в другой валюте путём конвертации лимита в $ в эквивалентную сумму в другой валюте
+            float limitCommissionTransferInCurrency = convertToCurrencyExchangeRateBank(
+                    clientProfile.getLimitCommissionTransferInUsdOrEquivalentInOtherCurrency(),
+                    "USD",
+                    fromCurrencyCode
+            );
+            // если комиссия превышает лимит за перевод в другой валюте, то ограничим комиссию лимитом в этой валюте
+            if (commission > limitCommissionTransferInCurrency) commission = limitCommissionTransferInCurrency;
+        }
+
+        return commission;
+    }
+
+    // Рассчитать комиссию за перевод клиенту моего банка. Переопределим метод в дочерних классах конкретных банков
+    public float getCommissionOfTransferToClientBank(SberPhysicalPersonProfile clientProfile, float sum, String fromCurrencyCode) {
+        return 0;
+    }
+
+    // Рассчитать комиссию за перевод клиенту другого банка
+    private float getCommissionOfTransferToClientAnotherBank(SberPhysicalPersonProfile clientProfile, float sum, String fromCurrencyCode) {
+        // можно не инициализировать, так как в любом случае будет результат благодаря ветке else
+        float commission;
+        // рассчитаем комиссию за перевод в рублях
+        if (fromCurrencyCode.equals("RUB")) commission = (sum / 100) * clientProfile.getPercentOfCommissionForTransferInRUB();
+        // рассчитаем комиссию за перевод в $ или другой валюте
+        else commission = (sum / 100) * clientProfile.getPercentOfCommissionForTransferInUsdOrOtherCurrency();
+
+        return commission;
+
+    }
+
+    // Проверить карта моего ли банка
+    private boolean isCardBank(SberVisaGold card) {
+        if (card.getBank().getBankName().equals(getBankName())) return true;
+        return false;
+    }
+
     // Запросить код валюты по названию страны
     public String getCurrencyCode(String country) {
         String currencyPayCode = null;
@@ -133,4 +198,6 @@ public class Bank {
     public float round(float sum) {
         return Math.round(sum * 100) / 100;
     }
+
+
 }

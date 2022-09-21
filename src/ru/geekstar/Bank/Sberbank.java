@@ -101,4 +101,19 @@ public class Sberbank extends Bank {
         return exchangeRateBank;
     }
 
+    @Override
+    // Рассчитать комиссию за перевод клиенту моего банка Сбер
+    public float getCommissionOfTransferToClientBank(SberPhysicalPersonProfile clientProfile, float sum, String fromCurrencyCode) {
+        // по умолчанию комиссия 0
+        float commission = 0;
+        // если сумма перевода в рублях
+        if (fromCurrencyCode.equals("RUB")) {
+            // и если превышен лимит по переводам клиентам Сбера в месяц, то рассчитываем комиссию за перевод
+            boolean exceededLimitTransfersToClientSberWithoutCommissionMonthInRUB = clientProfile.exceededLimitTransfersToClientSberWithoutCommissionMonthInRUB(sum);
+            if (exceededLimitTransfersToClientSberWithoutCommissionMonthInRUB)
+                commission = (sum / 100) * clientProfile.getPercentOfCommissionForTransferInRUB();
+        }
+        return commission;
+    }
+
 }

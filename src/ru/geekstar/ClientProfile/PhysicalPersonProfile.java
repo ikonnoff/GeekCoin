@@ -93,4 +93,20 @@ public class PhysicalPersonProfile extends ClientProfile {
     public void addCard(SberVisaGold card) {
         cards[countCards++] = card;
     }
+
+    // проверить привязана ли карта к профилю клиента
+    public boolean isClientCard(SberVisaGold card) {
+        for (int idCard = 0; idCard < countCards; idCard++) {
+            if (cards[idCard].equals(card)) return true;
+        }
+        return false;
+    }
+
+    // Прибавить сумму перевода на карту к общей сумме совершённых оплат и переводов в сутки, чтобы контролировать лимиты
+    public void updateTotalPaymentsTransfersDay(float sum, String fromCurrencyCode, SberVisaGold toCard) {
+        // моя ли карта, на которую выполняем перевод
+        boolean isMyCard = isClientCard(toCard);
+        // если не моя карта, то обновляем общую сумму
+        if (!isMyCard) updateTotalPaymentsTransfersDay(sum, fromCurrencyCode);
+    }
 }
