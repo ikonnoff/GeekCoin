@@ -101,6 +101,14 @@ public class PhysicalPerson {
         fromCard.transferCard2Account(toAccount, sumTransfer);
     }
 
+    public void depositingCardFromCard(SberVisaGold toCard, SberVisaGold fromCard, float sumDepositing) {
+        toCard.depositingCardFromCard(fromCard, sumDepositing);
+    }
+
+    public void depositingCardFromAccount(SberVisaGold toCard, SberSavingsAccount fromAccount, float sumDepositing) {
+        toCard.depositingCardFromAccount(fromAccount, sumDepositing);
+    }
+
     public void displayCardTransactions(SberVisaGold card) {
         card.displayCardTransactions();
     }
@@ -108,4 +116,5 @@ public class PhysicalPerson {
     public void displayAccountTransactions(SberSavingsAccount account) {
         account.displayAccountTransactions();
     }
+
 }

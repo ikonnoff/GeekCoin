@@ -342,6 +342,18 @@ public class Card {
         payCardAccount.addDepositingTransaction(depositingTransaction);
     }
 
+    // Пополнить карту с карты
+    public void depositingCardFromCard(SberVisaGold fromCard, float sumDepositing) {
+        // то есть перевести с карты на карту
+        fromCard.transferCard2Card((SberVisaGold) this, sumDepositing);
+    }
+
+    // Пополнить карту со счёта
+    public void depositingCardFromAccount(SberSavingsAccount fromAccount, float sumDepositing) {
+        // то есть перевести со счёта на карту
+        fromAccount.transferAccount2Card((SberVisaGold) this, sumDepositing);
+    }
+
     // Вывести транзакции по счёту карты
     public void displayCardTransactions() {
         payCardAccount.displayAccountTransactions();
