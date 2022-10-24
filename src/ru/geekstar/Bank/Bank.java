@@ -189,13 +189,13 @@ public class Bank {
     }
 
     // Проверить карта моего ли банка
-    private boolean isCardBank(SberVisaGold card) {
+    public boolean isCardBank(SberVisaGold card) {
         if (card.getBank().getBankName().equals(getBankName())) return true;
         return false;
     }
 
     // Проверить счёт моего ли банка
-    private boolean isAccountBank(SberSavingsAccount account) {
+    public boolean isAccountBank(SberSavingsAccount account) {
         if (account.getBank().getBankName().equals(getBankName())) return true;
         return false;
     }
