@@ -40,18 +40,24 @@ public class Main {
         I.depositingCash2Card(mySberVisaGold1, 7600.50f);
 
         I.payByCard(mySberVisaGold1, 100.50f, "ЖКХ");
+        I.payByCard(mySberVisaGold1, 110.00f, "Excursion", "Турция");
 
-        I.payByCard(mySberVisaGold1, 100.00f, "Excursion", "Турция");
+        I.transferCard2Card(mySberVisaGold1, mySberVisaGold2, 250.00f);
+        I.transferCard2Card(mySberVisaGold1, friendSberVisaGold1, 55.00f);
 
-        I.transferCard2Card(mySberVisaGold1, mySberVisaGold2, 150.00f);
+        I.transferCard2Account(mySberVisaGold1, mySberSavingsAccount1, 95.00f);
 
-
-
-        // Вывод операций по карте
+        System.out.println("Вывод операций по карте " + mySberVisaGold1.getNumberCard());
         I.displayCardTransactions(mySberVisaGold1);
+
+        System.out.println("\nВывод операций по карте друга " + friendSberVisaGold1.getNumberCard());
+        I.displayCardTransactions(friendSberVisaGold1);
+
+        System.out.println("\nВывод операций по карте " + mySberVisaGold2.getNumberCard());
         I.displayCardTransactions(mySberVisaGold2);
 
-        // Вывод операций по счёту
+        System.out.println("\nВывод операций по счету " + mySberSavingsAccount1.getNumberAccount());
+        I.displayAccountTransactions(mySberSavingsAccount1);
 
         // Вывод всех операций по всем картам и счетам профиля клиента
 
