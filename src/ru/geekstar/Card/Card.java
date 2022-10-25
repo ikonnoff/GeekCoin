@@ -200,7 +200,7 @@ public class Card {
                 // TODO: если валюты списания и зачисления не совпадают, то конвертируем сумму перевода в валюту карты зачисления по курсу банка
 
                 // зачислить на карту
-                boolean topUpStatus = toCard.getPayCardAccount().topUP(sumTransfer);
+                boolean topUpStatus = toCard.getPayCardAccount().topUp(sumTransfer);
                 if (topUpStatus) {
                     // внести в транзакцию пополнения статус пополнения
                     depositingTransaction.setStatusOperation("Пополнение прошло успешно");
@@ -273,7 +273,7 @@ public class Card {
                     // TODO: если валюты списания и зачисления не совпадают, то конвертировать сумму перевода в валюту счёта зачисления по курсу банка
 
                     // и зачислить на счёт
-                    boolean topUpStatus = toAccount.topUP(sumTransfer);
+                    boolean topUpStatus = toAccount.topUp(sumTransfer);
                     if (topUpStatus) {
                         // внести в транзакцию пополнения статус зачисления
                         depositingTransaction.setStatusOperation("Пополнение прошло успешно");
@@ -324,7 +324,7 @@ public class Card {
 
         // если разрешение получено, то выполняем пополнение
         if (authorizationStatus.equalsIgnoreCase("Success")) {
-            boolean topUpStatus = payCardAccount.topUP(sumDepositing);
+            boolean topUpStatus = payCardAccount.topUp(sumDepositing);
             if (topUpStatus) {
                 // внести в транзакцию статус пополнения
                 depositingTransaction.setStatusOperation("Внесение наличных прошло успешно");
