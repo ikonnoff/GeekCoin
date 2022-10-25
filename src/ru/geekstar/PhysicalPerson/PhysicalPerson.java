@@ -113,6 +113,10 @@ public class PhysicalPerson {
         toCard.depositingCardFromAccount(fromAccount, sumDepositing);
     }
 
+    public void depositingAccountFromCard(SberSavingsAccount toAccount, SberVisaGold fromCard, float sumDepositing) {
+        toAccount.depositingAccountFromCard(fromCard, sumDepositing);
+    }
+
     public void displayCardTransactions(SberVisaGold card) {
         card.displayCardTransactions();
     }
