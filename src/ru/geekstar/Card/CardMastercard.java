@@ -15,7 +15,7 @@ public class CardMastercard extends Card {
         // если покупка в Турции, то валюта биллинга в $
         if (country.equalsIgnoreCase("Турция")) billingCurrencyCode = currencyCodePaySystemUSD;
         // если покупка во Франции, то есть в Еврозоне, то валюта биллинга в €
-        if (country.equalsIgnoreCase("Турция")) billingCurrencyCode = currencyCodePaySystemEurozone;
+        if (country.equalsIgnoreCase("Франция")) billingCurrencyCode = currencyCodePaySystemEurozone;
 
         return billingCurrencyCode;
     }
@@ -25,7 +25,7 @@ public class CardMastercard extends Card {
     public float convertToCurrencyExchangeRatePaySystem(float sum, String fromCurrencyCode, String toBillingCurrencyCode) {
         // запросить курс валюты покупки к курсу валюты биллинга (к $ или €) по курсу платёжной системы Mastercard
         float exchangeRateCurrencyToBillingCurrency = getExchangeRatePaySystem(fromCurrencyCode, toBillingCurrencyCode);
-        // получаем сумму покупки в валюте биллинга умножив сумму покупки на обменный курс валюты биллинга ($)
+        // получаем сумму покупки в валюте биллинга умножив сумму покупки на обменный курс валюты биллинга ($ или €)
         float sumInBillingCurrency = sum * exchangeRateCurrencyToBillingCurrency;
 
         // возможна двойная конвертация через $ и затем ещё €

@@ -43,6 +43,7 @@ public class Card {
         return payCardAccount;
     }
 
+    // Привязываем платёжный счёт к карте
     public void setPayCardAccount(SberPayCardAccount payCardAccount) {
         this.payCardAccount = payCardAccount;
     }
@@ -216,6 +217,7 @@ public class Card {
                     getCardHolder().updateTotalPaymentsTransfersDay(sumTransfer, fromCurrencyCode, toCard);
 
                     // TODO: и перевести комиссию на счёт банка
+
                 } else transferTransaction.setStatusOperation("Перевод не прошёл");
             } else transferTransaction.setStatusOperation("Списание не прошло");
         } else {
@@ -288,6 +290,7 @@ public class Card {
                         getCardHolder().updateTotalPaymentsTransfersDay(sumTransfer, fromCurrencyCode, toAccount);
 
                         // TODO: и перевести комиссию на счёт банка
+
                     } else transferTransaction.setStatusOperation("Перевод не прошёл");
                 } else transferTransaction.setStatusOperation("Списание не прошло");
             } else transferTransaction.setStatusOperation("Лимит по сумме операций в день превышен");
@@ -338,7 +341,7 @@ public class Card {
         // внести в транзакцию баланс карты после пополнения
         depositingTransaction.setBalance(getPayCardAccount().getBalance());
 
-        // TODO: добавить и привязать транзакцию пополнения к счёту карты зачисления
+        // добавить и привязать транзакцию пополнения к счёту карты зачисления
         payCardAccount.addDepositingTransaction(depositingTransaction);
     }
 
@@ -358,69 +361,5 @@ public class Card {
     public void displayCardTransactions() {
         payCardAccount.displayAccountTransactions();
     }
-
-
-    /*
-    public void pay(float sumPay) {
-        // списать сумму покупки с карты
-        boolean payStatus;
-        byte errorTransaction = 0;
-        do {
-            payStatus = withdrawal(sumPay);
-            if (payStatus) { // payStatus == true
-                String transaction = paySystem + " " + numberCard + ": " + "Покупка " + sumPay + currency + " Остаток на карте " + deposit + currency;
-                setTransactions(transaction);
-                //System.out.println(transaction);
-            } else errorTransaction++;
-        } while (!payStatus && errorTransaction < 3);
-
-         TODO: перевести сумму на счет магазина
-
-    }
-
-    public void transfer(float sumTransfer) {
-        // нужно рассчитать комиссию за перевод
-        float comission;
-        if (sumTransfer < 50000) {
-            comission = 0.0f;
-        } else { // sumTransfer == 50000 || sumTransfer > 50000
-            comission = sumTransfer * 0.01f;
-        }
-
-        // затем списать деньги с карты
-        boolean transferStatus;
-        byte errorTransaction = 0;
-        do {
-            transferStatus = withdrawal(sumTransfer + comission);
-            if (transferStatus) {
-                String transaction = paySystem + " " + numberCard + ": " + "Переведено " + sumTransfer + currency + " Комиссия составила " + comission + currency + " Остаток на карте " + deposit + currency;
-                setTransactions(transaction);
-            } else errorTransaction++;
-        } while (!transferStatus && errorTransaction < 3);
-
-        // перевести деньги на другую карту
-
-        // и перевести комиссию на счёт банка
-
-    }
-
-    private void depositing(float sumDepositing) {
-        // внесение денег на карту
-        deposit = deposit + sumDepositing;
-        String transaction = paySystem + " " + numberCard + ": " + "Внесено " + sumDepositing + currency + " Остаток на карте " + deposit + currency;
-        setTransactions(transaction);
-    }
-
-    private boolean withdrawal(float sum) {
-        if (deposit >= sum) {
-            deposit = deposit - sum;
-            return true;
-        } else {
-            String transaction = paySystem + " " + numberCard + ": " + "Недостаточно средств на карте " + deposit + currency;
-            setTransactions(transaction);
-            return false;
-        }
-    }
-    */
 
 }

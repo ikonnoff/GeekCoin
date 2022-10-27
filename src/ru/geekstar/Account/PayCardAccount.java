@@ -63,6 +63,7 @@ public class PayCardAccount extends Account {
         cards[countCards++] = card;
     }
 
+    // Блокировать сумму на счёте карты
     public boolean blockSum(float sum) {
         // сохранить сумму на счёте как зарезервированную
         blockedSum += sum;
@@ -101,7 +102,7 @@ public class PayCardAccount extends Account {
     private String[] getAllPayCardAccountTransactions() {
         // сформировать общий массив транзакций перевода и пополнения в человекочитаемом формате
         String[] allTransferDepositingTransactions = getAllTransferDepositingTransactions();
-        // сформировать массив транзакций оплаты вчеловекочитаемом формате
+        // сформировать массив транзакций оплаты в человекочитаемом формате
         String[] allPayTransactions = getAllPayTransactions();
 
         // объявляем общий массив всех транзакций по платёжному счёту длиной равной общему количеству транзакций
