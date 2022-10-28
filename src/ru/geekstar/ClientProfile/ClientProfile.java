@@ -127,12 +127,12 @@ public class ClientProfile {
         this.limitCommissionTransferInUsdOrEquivalentInOtherCurrency = limitCommissionTransferInUsdOrEquivalentInOtherCurrency;
     }
 
-    // обнулять сумму оплатыи переводов каждые сутки
+    // обнулять сумму оплаты и переводов каждые сутки
     public void zeroingTotalPaymentsTransfersDay() {
         // TODO: если 00:00 каждого дня, то
-        totalPaymentsTransfersDayInRUB = 0;
-        totalPaymentsTransfersDayInEUR = 0;
-        totalPaymentsTransfersDayInUSD = 0;
+            totalPaymentsTransfersDayInRUB = 0;
+            totalPaymentsTransfersDayInEUR = 0;
+            totalPaymentsTransfersDayInUSD = 0;
     }
 
     // Проверить не превышен ли лимит по оплатам и переводам в сутки
