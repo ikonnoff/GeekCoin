@@ -125,4 +125,7 @@ public class PhysicalPerson {
         account.displayAccountTransactions();
     }
 
+    public void displayProfileTransactions() {
+        physicalPersonProfile.displayProfileTransactions();
+    }
 }

@@ -94,12 +94,12 @@ public class PayCardAccount extends Account {
 
         // вывести все транзакции
         for (int idTransaction = 0; idTransaction < allPayCardAccountTransactions.length; idTransaction++) {
-            System.out.println("#" + idTransaction + " " + allPayCardAccountTransactions[idTransaction]);
+            System.out.println("#" + (idTransaction + 1) + " " + allPayCardAccountTransactions[idTransaction]);
         }
 
     }
 
-    private String[] getAllPayCardAccountTransactions() {
+    public String[] getAllPayCardAccountTransactions() {
         // сформировать общий массив транзакций перевода и пополнения в человекочитаемом формате
         String[] allTransferDepositingTransactions = getAllTransferDepositingTransactions();
         // сформировать массив транзакций оплаты в человекочитаемом формате

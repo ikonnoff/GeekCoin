@@ -252,7 +252,7 @@ public class Account {
 
         // вывести все транзакции
         for (int idTransaction = 0; idTransaction < allTransferDepositingTransactions.length; idTransaction++) {
-            System.out.println("#" + idTransaction + " " + allTransferDepositingTransactions[idTransaction]);
+            System.out.println("#" + (idTransaction + 1) + " " + allTransferDepositingTransactions[idTransaction]);
         }
 
     }

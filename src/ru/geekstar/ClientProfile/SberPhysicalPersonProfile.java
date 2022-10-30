@@ -54,4 +54,20 @@ public class SberPhysicalPersonProfile extends PhysicalPersonProfile {
         if (!isMyAccount && isAccountMyBank) totalTransfersToClientSberWithoutCommissionMonthInRUB += sumTransfer;
     }
 
+    @Override
+    // Вывод всех операций по всем картам и счетам профиля физического лица в Сбере
+    public void displayProfileTransactions() {
+        // дополним метод уникальной информацией, присуще только Сберу
+        System.out.println("Все операции по картам и счетам клиента " + getPhysicalPerson().getFirstName() + " " + getPhysicalPerson().getLastName() +
+                " в " + getBank().getBankName() + "Банке");
+
+        System.out.println("Переводы клиентам " + getBank().getBankName() +
+                " без комиссии за текущий месяц: " + getTotalTransfersToClientSberWithoutCommissionMonthInRUB() + "₽ Доступный лимит: " +
+                (getLimitTransfersToClientSberWithoutCommissionMonthInRUB() - getTotalTransfersToClientSberWithoutCommissionMonthInRUB()) + "₽ из " +
+                getLimitTransfersToClientSberWithoutCommissionMonthInRUB() + "₽");
+
+        // и вызываем родительскую версию метода
+        super.displayProfileTransactions();
+    }
+
 }

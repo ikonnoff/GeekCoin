@@ -149,4 +149,8 @@ public class ClientProfile {
         if (currencyCode.equals("USD")) totalPaymentsTransfersDayInUSD += sum;
         if (currencyCode.equals("EUR")) totalPaymentsTransfersDayInEUR += sum;
     }
+
+    // Вывод всех операций по всем картам и счетам профиля клиента. Переопределим в дочерних классах
+    public void displayProfileTransactions() {
+    }
 }
