@@ -1,59 +1,76 @@
 package ru.geekstar;
 
+import ru.geekstar.Account.SberSavingsAccount;
+import ru.geekstar.Bank.Sberbank;
+import ru.geekstar.Card.SberVisaGold;
+import ru.geekstar.PhysicalPerson.PhysicalPerson;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        Card visaCard = new Card();
-        visaCard.setDeposit(7100.00f);
-        visaCard.setNumberCard("4573 6847 3497 1284");
-        visaCard.setPaySystem("VISA");
-        visaCard.setCurrency('₽');
-        visaCard.pay(100.50f);
-        visaCard.pay(250.00f);
-        visaCard.transfer(100.00f);
+        PhysicalPerson I = new PhysicalPerson();
+        I.setFirstName("Игорь");
+        I.setLastName("Коннов");
+        I.setTelephone("+79277394841");
+        I.setAge((byte)32);
+        I.setGender('M');
 
-        //System.out.println("\nОперации по карте " + visaCard.getPaySystem() + " " + visaCard.getNumberCard() + ": ");
-        String[] transactions = visaCard.getTransactions();
-        int countTransactions = visaCard.getCountTransactions();
-        for (int id = 0; id < countTransactions; id++) {
-            //System.out.println("Операция #" + id + " по карте " + transactions[id]);
-        }
+        PhysicalPerson friend = new PhysicalPerson();
+        friend.setFirstName("Герман");
+        friend.setLastName("Греф");
+        friend.setTelephone("+79273547845");
+        friend.setAge((byte)58);
+        friend.setGender('M');
 
-        Card masterCard = new Card();
-        masterCard.setDeposit(5600.00f);
-        masterCard.setNumberCard("7836 7562 5734 8693");
-        masterCard.setPaySystem("MASTERCARD");
-        masterCard.setCurrency('$');
-        masterCard.pay(50.25f);
+        Sberbank sberbank = new Sberbank();
+        sberbank.setBankName("Сбер");
 
-        Card unionPayCard = new Card();
-        unionPayCard.setDeposit(10000.00f);
-        unionPayCard.setNumberCard("4573 8695 8473 6743");
-        unionPayCard.setPaySystem("UNIONPAY");
-        unionPayCard.setCurrency('€');
-        unionPayCard.pay(500.00f);
+        I.registerToBank(sberbank);
+        friend.registerToBank(sberbank);
 
-        // Создадим массив карт
-        Card[] cards = new Card[3];
-        cards[0] = visaCard;
-        cards[1] = masterCard;
-        cards[2] = unionPayCard;
+        SberVisaGold mySberVisaGold1 = I.openCard(sberbank, new SberVisaGold(), "RUB");
+        SberVisaGold mySberVisaGold2 = I.openCard(sberbank, new SberVisaGold(), "RUB");
 
-        cards[0].pay(100.00f);
-        cards[1].transfer(200.00f);
-        cards[2].transfer(1000.00f);
+        SberSavingsAccount mySberSavingsAccount1 = I.openAccount(sberbank, new SberSavingsAccount(), "RUB");
+        SberSavingsAccount mySberSavingsAccount2 = I.openAccount(sberbank, new SberSavingsAccount(), "RUB");
 
-        System.out.println("Операции по всем картам: ");
-        for (int idCard = 0; idCard < cards.length; idCard++) {
-            Card card = cards[idCard];
-            String[] cardTransactions = card.getTransactions();
-            int cardCountTransactions = card.getCountTransactions();
+        SberVisaGold friendSberVisaGold1 = friend.openCard(sberbank, new SberVisaGold(), "RUB");
 
-            for (int id = 0; id < cardCountTransactions; id++) {
-                System.out.println("Операция #" + id + " по карте " + cardTransactions[id]);
-            }
+        I.depositingCash2Card(mySberVisaGold1, 7600.50f);
 
-        }
+        I.payByCard(mySberVisaGold1, 100.50f, "ЖКХ");
+        I.payByCard(mySberVisaGold1, 110.00f, "Excursion", "Турция");
+
+        I.transferCard2Card(mySberVisaGold1, mySberVisaGold2, 250.00f);
+        I.transferCard2Card(mySberVisaGold1, friendSberVisaGold1, 55.00f);
+
+        I.transferCard2Account(mySberVisaGold1, mySberSavingsAccount1, 95.00f);
+
+        I.transferAccount2Card(mySberSavingsAccount1, mySberVisaGold1, 15.00f);
+
+        I.depositingCardFromCard(mySberVisaGold1, mySberVisaGold2, 145.00f);
+        I.depositingCardFromAccount(mySberVisaGold1, mySberSavingsAccount1, 75.00f);
+
+        I.depositingAccountFromCard(mySberSavingsAccount1, mySberVisaGold1, 350.00f);
+
+/*
+        System.out.println("Вывод операций по карте " + mySberVisaGold1.getNumberCard());
+        I.displayCardTransactions(mySberVisaGold1);
+
+        System.out.println("\nВывод операций по карте друга " + friendSberVisaGold1.getNumberCard());
+        I.displayCardTransactions(friendSberVisaGold1);
+
+        System.out.println("\nВывод операций по карте " + mySberVisaGold2.getNumberCard());
+        I.displayCardTransactions(mySberVisaGold2);
+
+        System.out.println("\nВывод операций по счету " + mySberSavingsAccount1.getNumberAccount());
+        I.displayAccountTransactions(mySberSavingsAccount1);
+*/
+
+        // Вывод всех операций по всем картам и счетам профиля клиента с сортировкой по дате и времени
+        I.displayProfileTransactions();
+        friend.displayProfileTransactions();
+
     }
 }
