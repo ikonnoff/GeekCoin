@@ -147,7 +147,7 @@ public class Transaction {
     }
 
     public String getNameAccount(SberSavingsAccount account) {
-        return account.getBank().getBankName() + "Счёт ⦁⦁" + account.getNumberAccount().substring(16);
+        return account.getBank().getBankName() + "Счёт ⦁⦁" + account.getNumberAccount().substring(20);
     }
 
     // Вывести транзакции в строковом человекочитаемом формате
