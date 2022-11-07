@@ -64,18 +64,31 @@ public class Bank {
         }
         return numberAccountBuffer.toString();
     }
-    
-    // Провести авторизацию и выдать разрешение на проведение операции
-    public String authorization(SberVisaGold card, String typeOperation, float sum, float commission) {
-        // сгенерировать код авторизации
+
+    // Провести авторизацию только в части проверки статуса карты
+    public String authorizationStatusCard(SberVisaGold card) {
+        // генерируем код авторизации
         String authorizationCode = generateAuthorizationCode();
 
-        String authorizationMessage;
-        // проверить статус карты
-        boolean statusCard = card.getStatusCard().equalsIgnoreCase("Активна") ? true : false;
-        if (statusCard) {
-            authorizationMessage = "Success: Карта активна";
+        // проверяем статус карты: активна или заблокирована
+        String authorizationMessage = card.getStatusCard().equalsIgnoreCase("Активна") ? "Success: Карта активна" : "Failed: Карта заблокирована";
 
+        // возвращаем код и сообщение о статусе авторизации
+        return authorizationCode + "@" + authorizationMessage;
+    }
+
+    // Провести авторизацию и выдать разрешение на проведение операции с блокированием суммы для оплаты картой или перевода с карты на карту
+    public String authorization(SberVisaGold card, String typeOperation, float sum, float commission) {
+        // провести авторизацию в части проверки статуса карты
+        String authorizationStatusCard = authorizationStatusCard(card);
+        // извлекаем код авторизации
+        String authorizationCode = authorizationStatusCard.split("@")[0];
+        // извлекаем сообщение авторизации
+        String authorizationMessage = authorizationStatusCard.split("@")[1];
+        // извлекаем статус из сообщения авторизации
+        String authorizationStatus = authorizationMessage.substring(0, authorizationMessage.indexOf(":"));
+
+        if (authorizationStatus.equalsIgnoreCase("Success")) {
             // если тип операции покупка или перевод, то проверяем баланс и блокируем сумму покупки или перевода с комиссией
             if (typeOperation.contains("Покупка") || typeOperation.contains("Перевод")) {
                 // проверяем баланс и хватит ли нам денег с учётом комиссии
@@ -86,13 +99,13 @@ public class Bank {
                     if (!exceededLimitPaymentsTransfersDay) {
                         // блокируем сумму операции и комиссию на балансе счёта карты
                         boolean reserveAmountStatus = card.getPayCardAccount().blockSum(sum + commission);
-                        authorizationMessage = reserveAmountStatus ? "Success: Авторизация прошла успешно" : "Failed: Сбой авторизации";
+                        authorizationMessage = reserveAmountStatus ? "Success: Авторизация прошла успешно, сумма операции заблокирована" : "Failed: Сбой авторизации";
                     } else authorizationMessage = "Failed: Превышен лимит по оплатам и переводам в сутки";
                 } else authorizationMessage = "Failed: Недостаточно средств, пополните карту";
             }
-        } else authorizationMessage = "Failed: Карта заблокирована";
+        }
 
-        // вернуть код и сообщение о статусе авторизации
+        // возвращаем код и сообщение о статусе авторизации
         return authorizationCode + "@" + authorizationMessage;
     }
 
