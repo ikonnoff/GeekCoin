@@ -311,8 +311,7 @@ public class Card {
         depositingTransaction.setSum(sumDepositing);
         depositingTransaction.setCurrencySymbol(payCardAccount.getCurrencySymbol());
         depositingTransaction.setTypeOperation("Внесение наличных");
-
-
+        
         // запросить разрешение банка на проведение операции с проверкой статуса карты
         String authorization = bank.authorizationStatusCard((SberVisaGold) this);
 

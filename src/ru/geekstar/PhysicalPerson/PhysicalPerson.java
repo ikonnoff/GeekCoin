@@ -105,6 +105,10 @@ public class PhysicalPerson {
         fromAccount.transferAccount2Card(toCard, sumTransfer);
     }
 
+    public void transferAccount2Account(SberSavingsAccount fromAccount, SberSavingsAccount toAccount, float sumTransfer) {
+        fromAccount.transferAccount2Account(toAccount, sumTransfer);
+    }
+
     public void depositingCardFromCard(SberVisaGold toCard, SberVisaGold fromCard, float sumDepositing) {
         toCard.depositingCardFromCard(fromCard, sumDepositing);
     }
@@ -115,6 +119,10 @@ public class PhysicalPerson {
 
     public void depositingAccountFromCard(SberSavingsAccount toAccount, SberVisaGold fromCard, float sumDepositing) {
         toAccount.depositingAccountFromCard(fromCard, sumDepositing);
+    }
+
+    public void depositingAccountFromAccount(SberSavingsAccount toAccount, SberSavingsAccount fromAccount, float sumDepositing) {
+        toAccount.depositingAccountFromAccount(fromAccount, sumDepositing);
     }
 
     public void displayCardTransactions(SberVisaGold card) {
@@ -128,4 +136,5 @@ public class PhysicalPerson {
     public void displayProfileTransactions() {
         physicalPersonProfile.displayProfileTransactions();
     }
+
 }
