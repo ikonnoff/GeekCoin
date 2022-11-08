@@ -56,7 +56,6 @@ public class Main {
         I.depositingAccountFromCard(mySberSavingsAccount1, mySberVisaGold1, 350.00f);
         I.depositingAccountFromAccount(mySberSavingsAccount1, mySberSavingsAccount2, 25.00f);
 
-
 /*
         System.out.println("Вывод операций по карте " + mySberVisaGold1.getNumberCard());
         I.displayCardTransactions(mySberVisaGold1);
@@ -69,6 +68,9 @@ public class Main {
 
         System.out.println("\nВывод операций по счету " + mySberSavingsAccount1.getNumberAccount());
         I.displayAccountTransactions(mySberSavingsAccount1);
+
+        System.out.println("\nВывод операций по платёжному счёту карты " + mySberVisaGold1.getPayCardAccount());
+        I.displayAccountTransactions(mySberVisaGold2.getPayCardAccount());
 */
 
         // Вывод всех операций по всем картам и счетам профиля клиента с сортировкой по дате и времени
