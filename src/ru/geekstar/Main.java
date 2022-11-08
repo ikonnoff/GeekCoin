@@ -54,6 +54,8 @@ public class Main {
         I.depositingCardFromAccount(mySberVisaGold1, mySberSavingsAccount1, 75.00f);
 
         I.depositingAccountFromCard(mySberSavingsAccount1, mySberVisaGold1, 350.00f);
+        I.depositingAccountFromAccount(mySberSavingsAccount1, mySberSavingsAccount2, 25.00f);
+
 
 /*
         System.out.println("Вывод операций по карте " + mySberVisaGold1.getNumberCard());
