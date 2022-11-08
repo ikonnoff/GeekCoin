@@ -22,6 +22,8 @@ public class Card {
 
     private String statusCard;
 
+    private String pinCode;
+
 
     public Sberbank getBank() {
         return bank;
@@ -67,8 +69,17 @@ public class Card {
         this.statusCard = statusCard;
     }
 
+    public String getPinCode() {
+        return pinCode;
+    }
+
+    public void setPinCode(String pinCode) {
+        this.pinCode = pinCode;
+    }
+
+
     // Оплатить картой
-    public void payByCard(float sumPay, String buyProductOrService) {
+    public void payByCard(float sumPay, String buyProductOrService, String pinCode) {
         // инициализировать транзакцию оплаты
         PayTransaction payTransaction = new PayTransaction();
         payTransaction.setLocalDateTime(LocalDateTime.now());
@@ -85,7 +96,7 @@ public class Card {
         payTransaction.setCommission(commission);
 
         // запросить разрешение банка на проведение операции с блокированием суммы оплаты и комиссии
-        String authorization = bank.authorization((SberVisaGold) this, payTransaction.getTypeOperation(), sumPay, commission);
+        String authorization = bank.authorization((SberVisaGold) this, payTransaction.getTypeOperation(), sumPay, commission, pinCode);
         // извлекаем массив строк разделяя их символом @
         String[] authorizationData = authorization.split("@");
         // извлекаем код авторизации
@@ -121,7 +132,7 @@ public class Card {
     }
 
     // Оплатить картой за рубежом
-    public void payByCard(float sumPay, String buyProductOrService, String country) {
+    public void payByCard(float sumPay, String buyProductOrService, String country, String pinCode) {
         // по названию страны определяем валюту покупки
         String currencyPayCode = bank.getCurrencyCode(country);
         // по названию страны определяем валюту биллинга - это валюта платёжной системы
@@ -140,7 +151,7 @@ public class Card {
         sumPayInCardCurrency = bank.round(sumPayInCardCurrency);
 
         // приведя сумму покупки к валюте карты вызываем метод оплаты по умолчанию
-        payByCard(sumPayInCardCurrency, buyProductOrService);
+        payByCard(sumPayInCardCurrency, buyProductOrService, pinCode);
 
     }
 
@@ -174,7 +185,7 @@ public class Card {
         transferTransaction.setCommission(commission);
 
         // запросить разрешение банка на проведение операции с блокированием суммы перевода и комиссии
-        String authorization = bank.authorization((SberVisaGold) this, transferTransaction.getTypeOperation(), sumTransfer, commission);
+        String authorization = bank.authorization((SberVisaGold) this, transferTransaction.getTypeOperation(), sumTransfer, commission, null);
         String[] authorizationData = authorization.split("@");
         String authorizationCode = authorizationData[0];
         transferTransaction.setAuthorizationCode(authorizationCode);
