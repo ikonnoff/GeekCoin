@@ -19,7 +19,7 @@ public class DepositingTransaction extends Transaction {
 
         // если списание происходит со счёта
         if (getFromAccount() != null) {
-            // и если мы пополненяем чужую карту или счёт (или свою карту или счёт, но в другом банке), то добавляем в транзакцию имя отправителя перевода
+            // и если мы пополняем чужую карту или счёт (или свою карту или счёт, но в другом банке), то добавляем в транзакцию имя отправителя перевода
             if ((getToCard() != null && !getFromAccount().getAccountHolder().isClientCard(getToCard())) || (getToAccount() != null && !getFromAccount().getAccountHolder().isClientAccount(getToAccount()))) {
                 PhysicalPerson accountHolder = getFromAccount().getAccountHolder().getPhysicalPerson();
                 sender = accountHolder.getFirstName() + " " + accountHolder.getLastName().substring(0, 1);
