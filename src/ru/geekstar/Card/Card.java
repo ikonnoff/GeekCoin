@@ -236,7 +236,7 @@ public class Card {
             } else transferTransaction.setStatusOperation("Списание не прошло");
         } else {
             // иначе выводим сообщение о статусе авторизации, чтобы понимать что пошло не так
-            String authorizationStatusMessage = authorizationMessage.substring(authorizationMessage.indexOf(":") + 1);
+            String authorizationStatusMessage = authorizationMessage.substring(authorizationMessage.indexOf(":") + 2);
             transferTransaction.setStatusOperation(authorizationStatusMessage);
         }
 
