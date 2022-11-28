@@ -59,8 +59,12 @@ public class PayCardAccount extends Account {
     }
 
     // Привязать карту к платёжному счёту
-    public void addCard(SberVisaGold card) {
-        cards[countCards++] = card;
+    public boolean addCard(SberVisaGold card) {
+        if (countCards < cards.length) {
+            cards[countCards++] = card;
+            return true;
+        }
+        return false;
     }
 
     // Блокировать сумму на счёте карты
@@ -79,8 +83,12 @@ public class PayCardAccount extends Account {
     }
 
     // Добавить транзакцию об оплате
-    public void addPayTransaction(PayTransaction payTransaction) {
-        payTransactions[countPayTransactions++] = payTransaction;
+    public boolean addPayTransaction(PayTransaction payTransaction) {
+        if (countPayTransactions < payTransactions.length) {
+            payTransactions[countPayTransactions++] = payTransaction;
+            return true;
+        }
+        return false;
     }
 
     @Override
