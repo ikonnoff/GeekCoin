@@ -82,18 +82,30 @@ public class PhysicalPersonProfile extends ClientProfile {
 
 
     // Привязать платёжный счёт к профилю клиента
-    public void addAccount(SberPayCardAccount payCardAccount) {
-        payCardAccounts[countPayCardAccounts++] = payCardAccount;
+    public boolean addAccount(SberPayCardAccount payCardAccount) {
+        if (countPayCardAccounts < payCardAccounts.length) {
+            payCardAccounts[countPayCardAccounts++] = payCardAccount;
+            return true;
+        }
+        return false;
     }
 
     // Привязать сберегательный счёт к профилю клиента
-    public void addAccount(SberSavingsAccount savingsAccount) {
-        savingsAccounts[countSavingsAccounts++] = savingsAccount;
+    public boolean addAccount(SberSavingsAccount savingsAccount) {
+        if (countSavingsAccounts < savingsAccounts.length) {
+            savingsAccounts[countSavingsAccounts++] = savingsAccount;
+            return true;
+        }
+        return false;
     }
 
     // Привязать карту к профилю клиента
-    public void addCard(SberVisaGold card) {
-        cards[countCards++] = card;
+    public boolean addCard(SberVisaGold card) {
+        if (countCards < cards.length) {
+            cards[countCards++] = card;
+            return true;
+        }
+        return false;
     }
 
     // проверить привязана ли карта к профилю клиента

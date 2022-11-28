@@ -296,13 +296,21 @@ public class Account {
     }
 
     // Добавить транзакцию о пополнении
-    public void addDepositingTransaction(DepositingTransaction depositingTransaction) {
-        depositingTransactions[countDepositingTransactions++] = depositingTransaction;
+    public boolean addDepositingTransaction(DepositingTransaction depositingTransaction) {
+        if (countDepositingTransactions < depositingTransactions.length) {
+            depositingTransactions[countDepositingTransactions++] = depositingTransaction;
+            return true;
+        }
+        return false;
     }
 
     // Добавить транзакцию перевода
-    public void addTransferTransaction(TransferTransaction transferTransaction) {
-        transferTransactions[countTransferTransactions++] = transferTransaction;
+    public boolean addTransferTransaction(TransferTransaction transferTransaction) {
+        if (countTransferTransactions < transferTransactions.length) {
+            transferTransactions[countTransferTransactions++] = transferTransaction;
+            return true;
+        }
+        return false;
     }
 
     // Проверить достаточно ли денег на балансе

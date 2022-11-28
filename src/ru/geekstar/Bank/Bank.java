@@ -39,8 +39,12 @@ public class Bank {
     }
 
     // Добавить профиль клиента
-    public void addClientProfile(SberPhysicalPersonProfile clientProfile) {
-        clientProfiles[countClientProfiles++] = clientProfile;
+    public boolean addClientProfile(SberPhysicalPersonProfile clientProfile) {
+        if (countClientProfiles < clientProfiles.length) {
+            clientProfiles[countClientProfiles++] = clientProfile;
+            return true;
+        }
+        return false;
     }
 
     // Сгенерировать номер карты 3546 0957 9843 7845
