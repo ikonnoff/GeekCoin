@@ -1,5 +1,6 @@
 package ru.geekstar.Account;
 
+import ru.geekstar.Card.Card;
 import ru.geekstar.Card.SberVisaGold;
 import ru.geekstar.Transaction.PayTransaction;
 
@@ -7,7 +8,7 @@ import java.util.Arrays;
 
 public class PayCardAccount extends Account {
 
-    private SberVisaGold[] cards = new SberVisaGold[2];
+    private Card[] cards = new Card[2];
 
     private PayTransaction[] payTransactions = new PayTransaction[50];
 
@@ -18,11 +19,11 @@ public class PayCardAccount extends Account {
     private int countPayTransactions;
 
 
-    public SberVisaGold[] getCards() {
+    public Card[] getCards() {
         return cards;
     }
 
-    public void setCards(SberVisaGold[] cards) {
+    public void setCards(Card[] cards) {
         this.cards = cards;
     }
 
@@ -59,7 +60,7 @@ public class PayCardAccount extends Account {
     }
 
     // Привязать карту к платёжному счёту
-    public boolean addCard(SberVisaGold card) {
+    public boolean addCard(Card card) {
         if (countCards < cards.length) {
             cards[countCards++] = card;
             return true;

@@ -70,7 +70,7 @@ public class Bank {
     }
 
     // Провести авторизацию только в части проверки статуса карты
-    public String authorizationStatusCard(SberVisaGold card) {
+    public String authorizationStatusCard(Card card) {
         // генерируем код авторизации
         String authorizationCode = generateAuthorizationCode();
 
@@ -82,7 +82,7 @@ public class Bank {
     }
 
     // Провести авторизацию и выдать разрешение на проведение операции с блокированием суммы для оплаты картой или перевода с карты на карту
-    public String authorization(SberVisaGold card, String typeOperation, float sum, float commission, String pinCode) {
+    public String authorization(Card card, String typeOperation, float sum, float commission, String pinCode) {
         // провести авторизацию в части проверки статуса карты
         String authorizationStatusCard = authorizationStatusCard(card);
         // извлекаем код авторизации
@@ -131,7 +131,7 @@ public class Bank {
     }
 
     // Рассчитать комиссию за перевод на свою или чужую карту моего или другого банка
-    public float getCommission(SberPhysicalPersonProfile clientProfile, String fromCurrencyCode, float sum, SberVisaGold toCard) {
+    public float getCommission(SberPhysicalPersonProfile clientProfile, String fromCurrencyCode, float sum, Card toCard) {
         // запросить моя ли карта, на которую выполняем перевод
         boolean isMyCard = clientProfile.isClientCard(toCard);
         // запросить моего ли банка карта, на которую выполняем перевод
@@ -209,7 +209,7 @@ public class Bank {
     }
 
     // Проверить карта моего ли банка
-    public boolean isCardBank(SberVisaGold card) {
+    public boolean isCardBank(Card card) {
         if (card.getBank().getBankName().equals(getBankName())) return true;
         return false;
     }
