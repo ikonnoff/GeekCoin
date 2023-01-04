@@ -3,15 +3,15 @@ package ru.geekstar.Card;
 import ru.geekstar.Account.SberPayCardAccount;
 import ru.geekstar.Account.SberSavingsAccount;
 import ru.geekstar.Bank.Sberbank;
+import ru.geekstar.Card.IPaySystem.IPaySystem;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
-import ru.geekstar.ClientProfile.SberPhysicalPersonProfile;
 import ru.geekstar.Transaction.DepositingTransaction;
 import ru.geekstar.Transaction.PayTransaction;
 import ru.geekstar.Transaction.TransferTransaction;
 
 import java.time.LocalDateTime;
 
-public abstract class Card {
+public abstract class Card implements IPaySystem {
 
     private Sberbank bank;
 
@@ -155,14 +155,6 @@ public abstract class Card {
         payByCard(sumPayInCardCurrency, buyProductOrService, pinCode);
 
     }
-
-    // Конвертировать в валюту по курсу платёжной системы
-    // Переопределим в дочерних классах, потому что у платёжных систем разные алгоритмы конвертации
-    public abstract float convertToCurrencyExchangeRatePaySystem(float sum, String fromCurrencyCode, String toBillingCurrencyCode);
-
-    // Запросить код валюты платёжной системы
-    // Переопределим в дочерних классах, потому что нет общего алгоритма, так как у платёжных систем разные валюты
-    public abstract String getCurrencyCodePaySystem(String country);
 
     // Перевести с карты на карту
     public void transferCard2Card(Card toCard, float sumTransfer) {
