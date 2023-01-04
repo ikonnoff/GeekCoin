@@ -2,15 +2,12 @@ package ru.geekstar.Bank;
 
 import ru.geekstar.Account.Account;
 import ru.geekstar.Account.SberPayCardAccount;
-import ru.geekstar.Account.SberSavingsAccount;
 import ru.geekstar.Card.Card;
-import ru.geekstar.Card.SberMastercardGold;
-import ru.geekstar.Card.SberVisaGold;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 import ru.geekstar.ClientProfile.SberPhysicalPersonProfile;
 import ru.geekstar.PhysicalPerson.PhysicalPerson;
 
-public class Sberbank extends Bank implements IServicePhysicalPersons {
+public class Sberbank extends Bank implements IBankServicePhysicalPersons {
 
     // Зарегистрировать профиль физ лица
     @Override

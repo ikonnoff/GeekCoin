@@ -3,15 +3,9 @@ package ru.geekstar.PhysicalPerson;
 import ru.geekstar.Account.Account;
 import ru.geekstar.Account.SberPayCardAccount;
 import ru.geekstar.Account.SberSavingsAccount;
-import ru.geekstar.Bank.Bank;
-import ru.geekstar.Bank.IServicePhysicalPersons;
-import ru.geekstar.Bank.Sberbank;
+import ru.geekstar.Bank.IBankServicePhysicalPersons;
 import ru.geekstar.Card.Card;
-import ru.geekstar.Card.SberMastercardGold;
-import ru.geekstar.Card.SberMastercardTravel;
-import ru.geekstar.Card.SberVisaGold;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
-import ru.geekstar.ClientProfile.SberPhysicalPersonProfile;
 
 public class PhysicalPerson {
 
@@ -76,15 +70,15 @@ public class PhysicalPerson {
         this.physicalPersonProfile = physicalPersonProfile;
     }
 
-    public void registerPhysicalPersonToBank(IServicePhysicalPersons bank) {
+    public void registerPhysicalPersonToBank(IBankServicePhysicalPersons bank) {
         setPhysicalPersonProfile(bank.registerPhysicalPersonProfile(this));
     }
 
-    public Card openCard(IServicePhysicalPersons bank, Card card, String currencyCode, String pinCode) {
+    public Card openCard(IBankServicePhysicalPersons bank, Card card, String currencyCode, String pinCode) {
         return bank.openCard(physicalPersonProfile, card, currencyCode, pinCode);
     }
 
-    public Account openAccount(IServicePhysicalPersons bank, Account account, String currencyCode) {
+    public Account openAccount(IBankServicePhysicalPersons bank, Account account, String currencyCode) {
         return bank.openAccount(physicalPersonProfile, account, currencyCode);
     }
 
