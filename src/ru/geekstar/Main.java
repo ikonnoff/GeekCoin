@@ -28,8 +28,8 @@ public class Main {
         Sberbank sberbank = new Sberbank();
         sberbank.setBankName("Сбер");
 
-        I.registerToBank(sberbank);
-        friend.registerToBank(sberbank);
+        I.registerPhysicalPersonToBank(sberbank);
+        friend.registerPhysicalPersonToBank(sberbank);
 
         SberVisaGold mySberVisaGold1 = (SberVisaGold) I.openCard(sberbank, new SberVisaGold(), "RUB", "7751");
         SberVisaGold mySberVisaGold2 = (SberVisaGold) I.openCard(sberbank, new SberVisaGold(), "RUB", "9462");
@@ -38,8 +38,8 @@ public class Main {
 
         SberMastercardTravel sberMastercardTravel = (SberMastercardTravel) I.openCard(sberbank, new SberMastercardTravel(), "RUB", "3957");
 
-        SberSavingsAccount mySberSavingsAccount1 = I.openAccount(sberbank, new SberSavingsAccount(), "RUB");
-        SberSavingsAccount mySberSavingsAccount2 = I.openAccount(sberbank, new SberSavingsAccount(), "RUB");
+        SberSavingsAccount mySberSavingsAccount1 = (SberSavingsAccount) I.openAccount(sberbank, new SberSavingsAccount(), "RUB");
+        SberSavingsAccount mySberSavingsAccount2 = (SberSavingsAccount) I.openAccount(sberbank, new SberSavingsAccount(), "RUB");
 
         SberVisaGold friendSberVisaGold1 = (SberVisaGold) friend.openCard(sberbank, new SberVisaGold(), "RUB", "1538");
 

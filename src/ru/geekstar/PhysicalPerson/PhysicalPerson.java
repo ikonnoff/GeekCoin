@@ -1,12 +1,16 @@
 package ru.geekstar.PhysicalPerson;
 
+import ru.geekstar.Account.Account;
 import ru.geekstar.Account.SberPayCardAccount;
 import ru.geekstar.Account.SberSavingsAccount;
+import ru.geekstar.Bank.Bank;
+import ru.geekstar.Bank.IServicePhysicalPersons;
 import ru.geekstar.Bank.Sberbank;
 import ru.geekstar.Card.Card;
 import ru.geekstar.Card.SberMastercardGold;
 import ru.geekstar.Card.SberMastercardTravel;
 import ru.geekstar.Card.SberVisaGold;
+import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 import ru.geekstar.ClientProfile.SberPhysicalPersonProfile;
 
 public class PhysicalPerson {
@@ -21,7 +25,7 @@ public class PhysicalPerson {
 
     private char gender;
 
-    private SberPhysicalPersonProfile physicalPersonProfile;
+    private PhysicalPersonProfile physicalPersonProfile;
 
 
     public String getFirstName() {
@@ -64,24 +68,23 @@ public class PhysicalPerson {
         this.gender = gender;
     }
 
-    public SberPhysicalPersonProfile getPhysicalPersonProfile() {
+    public PhysicalPersonProfile getPhysicalPersonProfile() {
         return physicalPersonProfile;
     }
 
-    public void setPhysicalPersonProfile(SberPhysicalPersonProfile physicalPersonProfile) {
+    public void setPhysicalPersonProfile(PhysicalPersonProfile physicalPersonProfile) {
         this.physicalPersonProfile = physicalPersonProfile;
     }
 
-
-    public void registerToBank(Sberbank bank) {
-        setPhysicalPersonProfile(bank.registerClientProfile(this));
+    public void registerPhysicalPersonToBank(IServicePhysicalPersons bank) {
+        setPhysicalPersonProfile(bank.registerPhysicalPersonProfile(this));
     }
 
-    public Card openCard(Sberbank bank, Card card, String currencyCode, String pinCode) {
+    public Card openCard(IServicePhysicalPersons bank, Card card, String currencyCode, String pinCode) {
         return bank.openCard(physicalPersonProfile, card, currencyCode, pinCode);
     }
 
-    public SberSavingsAccount openAccount(Sberbank bank, SberSavingsAccount account, String currencyCode) {
+    public Account openAccount(IServicePhysicalPersons bank, Account account, String currencyCode) {
         return bank.openAccount(physicalPersonProfile, account, currencyCode);
     }
 
