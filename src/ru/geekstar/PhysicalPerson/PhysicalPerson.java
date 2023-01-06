@@ -4,8 +4,11 @@ import ru.geekstar.Account.Account;
 import ru.geekstar.Account.SberPayCardAccount;
 import ru.geekstar.Account.SberSavingsAccount;
 import ru.geekstar.Bank.IBankServicePhysicalPersons;
+import ru.geekstar.Bank.Sberbank;
 import ru.geekstar.Card.Card;
+import ru.geekstar.Card.IMulticurrencyCard;
 import ru.geekstar.Card.IPaySystem.IPaySystem;
+import ru.geekstar.Card.SberMastercardTravel;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 
 public class PhysicalPerson {
@@ -147,4 +150,11 @@ public class PhysicalPerson {
         physicalPersonProfile.displayProfileTransactions();
     }
 
+    public void addAccountToMulticurrencyCard(IBankServicePhysicalPersons bank, IMulticurrencyCard multicurrencyCard, String currencyCodeAccount) {
+        multicurrencyCard.addAccount(bank, physicalPersonProfile, currencyCodeAccount);
+    }
+
+    public void switchAccountOfMulticurrencyCard(IMulticurrencyCard multicurrencyCard, String currencyCodeAccount) {
+        multicurrencyCard.switchAccount(currencyCodeAccount);
+    }
 }
