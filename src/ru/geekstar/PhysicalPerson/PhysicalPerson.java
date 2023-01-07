@@ -6,6 +6,7 @@ import ru.geekstar.Account.SberSavingsAccount;
 import ru.geekstar.Bank.IBankServicePhysicalPersons;
 import ru.geekstar.Bank.Sberbank;
 import ru.geekstar.Card.Card;
+import ru.geekstar.Card.IBonusCard;
 import ru.geekstar.Card.IMulticurrencyCard;
 import ru.geekstar.Card.IPaySystem.IPaySystem;
 import ru.geekstar.Card.SberMastercardTravel;
@@ -156,5 +157,9 @@ public class PhysicalPerson {
 
     public void switchAccountOfMulticurrencyCard(IMulticurrencyCard multicurrencyCard, String currencyCodeAccount) {
         multicurrencyCard.switchAccount(currencyCodeAccount);
+    }
+
+    public void payByCardBonuses(IBonusCard bonusCard, float sumPay, int bonusesPay, String buyProductOrService) {
+        bonusCard.payByCardBonuses(sumPay, bonusesPay, buyProductOrService);
     }
 }

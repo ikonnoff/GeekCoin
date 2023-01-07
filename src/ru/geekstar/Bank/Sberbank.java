@@ -17,6 +17,8 @@ public class Sberbank extends Bank implements IBankServicePhysicalPersons {
         sberPhysicalPersonProfile.setBank(this);
         sberPhysicalPersonProfile.setPhysicalPerson(physicalPerson);
 
+        sberPhysicalPersonProfile.setPercentBonusOfSumPay(0.5f);
+
         // установить лимиты
         sberPhysicalPersonProfile.setLimitPaymentsTransfersDayInRUB(1000000.00f);
         sberPhysicalPersonProfile.setLimitPaymentsTransfersDayInUSD(50000.00f);
