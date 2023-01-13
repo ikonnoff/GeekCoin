@@ -151,8 +151,8 @@ public class PhysicalPerson {
         physicalPersonProfile.displayProfileTransactions();
     }
 
-    public void addAccountToMulticurrencyCard(IBankServicePhysicalPersons bank, IMulticurrencyCard multicurrencyCard, String currencyCodeAccount) {
-        multicurrencyCard.addAccount(bank, physicalPersonProfile, currencyCodeAccount);
+    public void addAccountToMulticurrencyCard(IMulticurrencyCard multicurrencyCard, String currencyCodeAccount) {
+        multicurrencyCard.addAccount(currencyCodeAccount);
     }
 
     public void switchAccountOfMulticurrencyCard(IMulticurrencyCard multicurrencyCard, String currencyCodeAccount) {
