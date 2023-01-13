@@ -1,11 +1,8 @@
 package ru.geekstar.Card;
 
-public class CardMastercard extends Card {
+import ru.geekstar.Card.IPaySystem.IMastercard;
 
-    private String currencyCodePaySystemUSD = "USD";
-
-    private String currencyCodePaySystemEurozone = "EUR";
-
+public abstract class CardMastercard extends Card implements IMastercard {
 
     @Override
     // Запросить код валюты платёжной системы
@@ -34,7 +31,7 @@ public class CardMastercard extends Card {
     }
 
     // Запросить обменный курс валют платёжной системы
-    private float getExchangeRatePaySystem(String currency, String currencyExchangeRate) {
+    public float getExchangeRatePaySystem(String currency, String currencyExchangeRate) {
         // TODO: Запрос к API Mastercard
         float exchangeRate = 0;
         // курс лиры к доллару

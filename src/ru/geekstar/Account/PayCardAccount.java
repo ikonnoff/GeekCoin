@@ -1,13 +1,15 @@
 package ru.geekstar.Account;
 
+import ru.geekstar.Card.Card;
 import ru.geekstar.Card.SberVisaGold;
 import ru.geekstar.Transaction.PayTransaction;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
-public class PayCardAccount extends Account {
+public abstract class PayCardAccount extends Account {
 
-    private SberVisaGold[] cards = new SberVisaGold[2];
+    private ArrayList<Card> cards = new ArrayList<>();
 
     private PayTransaction[] payTransactions = new PayTransaction[50];
 
@@ -18,11 +20,11 @@ public class PayCardAccount extends Account {
     private int countPayTransactions;
 
 
-    public SberVisaGold[] getCards() {
+    public ArrayList<Card> getCards() {
         return cards;
     }
 
-    public void setCards(SberVisaGold[] cards) {
+    public void setCards(ArrayList<Card> cards) {
         this.cards = cards;
     }
 
@@ -58,14 +60,6 @@ public class PayCardAccount extends Account {
         this.countPayTransactions = countPayTransactions;
     }
 
-    // Привязать карту к платёжному счёту
-    public boolean addCard(SberVisaGold card) {
-        if (countCards < cards.length) {
-            cards[countCards++] = card;
-            return true;
-        }
-        return false;
-    }
 
     // Блокировать сумму на счёте карты
     public boolean blockSum(float sum) {
@@ -95,7 +89,7 @@ public class PayCardAccount extends Account {
     // Вывести транзакции по счёту
     public void displayAccountTransactions() {
         // сформировать общий массив транзакций по платёжному счёту в человекочитаемом формате
-        String[] allPayCardAccountTransactions = getAllPayCardAccountTransactions();
+        String[] allPayCardAccountTransactions = getAllAccountTransactions();
 
         // отсортировать транзакции по дате
         Arrays.sort(allPayCardAccountTransactions);
@@ -107,9 +101,10 @@ public class PayCardAccount extends Account {
 
     }
 
-    public String[] getAllPayCardAccountTransactions() {
+    @Override
+    public String[] getAllAccountTransactions() {
         // сформировать общий массив транзакций перевода и пополнения в человекочитаемом формате
-        String[] allTransferDepositingTransactions = getAllTransferDepositingTransactions();
+        String[] allTransferDepositingTransactions = super.getAllAccountTransactions();
         // сформировать массив транзакций оплаты в человекочитаемом формате
         String[] allPayTransactions = getAllPayTransactions();
 

@@ -1,8 +1,8 @@
 package ru.geekstar.Card;
 
-public class CardVisa extends Card {
+import ru.geekstar.Card.IPaySystem.IVisa;
 
-    private String currencyCodePaySystemUSD = "USD";
+public abstract class CardVisa extends Card implements IVisa {
 
     @Override
     // Запросить код валюты платёжной системы
@@ -27,7 +27,7 @@ public class CardVisa extends Card {
     }
 
     // Запросить обменный курс валют платёжной системы
-    private float getExchangeRatePaySystem(String currency, String currencyExchangeRate) {
+    public float getExchangeRatePaySystem(String currency, String currencyExchangeRate) {
         // TODO: Запрос к API Visa
         float exchangeRate = 0;
         // курс лиры к доллару
