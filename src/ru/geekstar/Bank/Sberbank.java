@@ -36,7 +36,7 @@ public class Sberbank extends Bank implements IBankServicePhysicalPersons {
         sberPhysicalPersonProfile.setLimitCommissionTransferInUsdOrEquivalentInOtherCurrency(100.00f);
 
         // и привязать профиль клиента к банку
-        addClientProfile(sberPhysicalPersonProfile);
+        getClientProfiles().add(sberPhysicalPersonProfile);
 
         return sberPhysicalPersonProfile;
     }
@@ -61,7 +61,7 @@ public class Sberbank extends Bank implements IBankServicePhysicalPersons {
         card.setPinCode(pinCode);
 
         // привязать карту к профилю клиента
-        physicalPersonProfile.addCard(card);
+        physicalPersonProfile.getCards().add(card);
 
         return card;
     }
@@ -77,7 +77,7 @@ public class Sberbank extends Bank implements IBankServicePhysicalPersons {
         account.setCurrencySymbol(currencyCode);
 
         // привязать сберегательный счёт к профилю клиента
-        physicalPersonProfile.addAccount(account);
+        physicalPersonProfile.getAccounts().add(account);
 
         return account;
     }
