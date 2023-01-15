@@ -11,13 +11,9 @@ public abstract class PayCardAccount extends Account {
 
     private ArrayList<Card> cards = new ArrayList<>();
 
-    private PayTransaction[] payTransactions = new PayTransaction[50];
+    private ArrayList<PayTransaction> payTransactions = new ArrayList<>();
 
     private float blockedSum;
-
-    private byte countCards;
-
-    private int countPayTransactions;
 
 
     public ArrayList<Card> getCards() {
@@ -28,11 +24,11 @@ public abstract class PayCardAccount extends Account {
         this.cards = cards;
     }
 
-    public PayTransaction[] getPayTransactions() {
+    public ArrayList<PayTransaction> getPayTransactions() {
         return payTransactions;
     }
 
-    public void setPayTransactions(PayTransaction[] payTransactions) {
+    public void setPayTransactions(ArrayList<PayTransaction> payTransactions) {
         this.payTransactions = payTransactions;
     }
 
@@ -42,22 +38,6 @@ public abstract class PayCardAccount extends Account {
 
     public void setBlockedSum(float blockedSum) {
         this.blockedSum = blockedSum;
-    }
-
-    public byte getCountCards() {
-        return countCards;
-    }
-
-    public void setCountCards(byte countCards) {
-        this.countCards = countCards;
-    }
-
-    public int getCountPayTransactions() {
-        return countPayTransactions;
-    }
-
-    public void setCountPayTransactions(int countPayTransactions) {
-        this.countPayTransactions = countPayTransactions;
     }
 
 
@@ -74,15 +54,6 @@ public abstract class PayCardAccount extends Account {
     public boolean writeOffBlockedSum(float sum) {
         blockedSum -= sum;
         return true;
-    }
-
-    // Добавить транзакцию об оплате
-    public boolean addPayTransaction(PayTransaction payTransaction) {
-        if (countPayTransactions < payTransactions.length) {
-            payTransactions[countPayTransactions++] = payTransaction;
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -123,12 +94,12 @@ public abstract class PayCardAccount extends Account {
 
     private String[] getAllPayTransactions() {
         // объявить массив транзакций оплаты по платёжному счёту длиной равной количеству транзакций
-        String[] allPayTransactions = new String[countPayTransactions];
+        String[] allPayTransactions = new String[payTransactions.size()];
 
         int countAllPayTransactions = 0;
         // перебираем транзакции оплаты и добавляем их в массив в человекочитаемом формате
-        for (int idTransaction = 0; idTransaction < countPayTransactions; idTransaction++) {
-            allPayTransactions[countAllPayTransactions++] = payTransactions[idTransaction].getStringTransaction();
+        for (int idTransaction = 0; idTransaction < payTransactions.size(); idTransaction++) {
+            allPayTransactions[countAllPayTransactions++] = payTransactions.get(idTransaction).getStringTransaction();
         }
 
         return allPayTransactions;
