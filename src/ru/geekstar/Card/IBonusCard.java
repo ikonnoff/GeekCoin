@@ -6,6 +6,6 @@ public interface IBonusCard {
     void accumulateBonuses(float sumPay);
 
     // оплачиваем бонусами
-    void payByCardBonuses(float sumPay, int bonusesPay, String buyProductOrService);
+    void payByCardBonuses(float sumPay, int bonusesPay, String buyProductOrService, String pinCode);
 
 }
