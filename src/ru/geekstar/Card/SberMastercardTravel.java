@@ -32,9 +32,4 @@ public class SberMastercardTravel extends CardMastercard implements IMulticurren
         getMulticurrencyAccounts().add(payCardAccount);
     }
 
-    @Override
-    public void switchAccount(String currencyCodeAccount) {
-        // попробуйте реализовать и прислать мне свой вариант
-        // если покажется сложным, то я дам псевдокод в качестве подсказки
-    }
 }
