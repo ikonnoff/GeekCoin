@@ -129,7 +129,7 @@ public abstract class Account {
         // инициализировать транзакцию перевода
         TransferTransaction transferTransaction = new TransferTransaction();
         transferTransaction.setLocalDateTime(LocalDateTime.now());
-        transferTransaction.setFromAccount((SberSavingsAccount) this);
+        transferTransaction.setFromAccount(this);
         transferTransaction.setToCard(toCard);
         transferTransaction.setSum(sumTransfer);
         transferTransaction.setCurrencySymbol(currencySymbol);
@@ -159,7 +159,7 @@ public abstract class Account {
                     // инициализировать транзакцию пополнения
                     DepositingTransaction depositingTransaction = new DepositingTransaction();
                     depositingTransaction.setLocalDateTime(LocalDateTime.now());
-                    depositingTransaction.setFromAccount((SberSavingsAccount) this);
+                    depositingTransaction.setFromAccount(this);
                     depositingTransaction.setToCard(toCard);
                     depositingTransaction.setTypeOperation("Перевод со счёта");
                     depositingTransaction.setSum(sumTransfer);
@@ -203,11 +203,11 @@ public abstract class Account {
     }
 
     // Перевести со счёта на счёт
-    public void transferAccount2Account(SberSavingsAccount toAccount, float sumTransfer) {
+    public void transferAccount2Account(Account toAccount, float sumTransfer) {
         // инициализировать транзакцию перевода
         TransferTransaction transferTransaction = new TransferTransaction();
         transferTransaction.setLocalDateTime(LocalDateTime.now());
-        transferTransaction.setFromAccount((SberSavingsAccount)this);
+        transferTransaction.setFromAccount(this);
         transferTransaction.setToAccount(toAccount);
         transferTransaction.setSum(sumTransfer);
         transferTransaction.setCurrencySymbol(currencySymbol);
@@ -236,7 +236,7 @@ public abstract class Account {
                     // инициализировать транзакцию пополнения
                     DepositingTransaction depositingTransaction = new DepositingTransaction();
                     depositingTransaction.setLocalDateTime(LocalDateTime.now());
-                    depositingTransaction.setFromAccount((SberSavingsAccount)this);
+                    depositingTransaction.setFromAccount(this);
                     depositingTransaction.setToAccount(toAccount);
                     depositingTransaction.setTypeOperation("Перевод со счёта");
                     depositingTransaction.setSum(sumTransfer);
@@ -282,13 +282,13 @@ public abstract class Account {
     // Пополнить счёт с карты
     public void depositingAccountFromCard(Card fromCard, float sumDepositing) {
         // то есть перевести с карты на счёт
-        fromCard.transferCard2Account((SberSavingsAccount) this, sumDepositing);
+        fromCard.transferCard2Account(this, sumDepositing);
     }
 
     // Пополнить счёт со счёта
-    public void depositingAccountFromAccount(SberSavingsAccount fromAccount, float sumDepositing) {
+    public void depositingAccountFromAccount(Account fromAccount, float sumDepositing) {
         // перевести со счёта на счёт
-        fromAccount.transferAccount2Account((SberSavingsAccount)this, sumDepositing);
+        fromAccount.transferAccount2Account(this, sumDepositing);
     }
 
     // Пополнить баланс
