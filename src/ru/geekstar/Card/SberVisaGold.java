@@ -3,6 +3,10 @@ package ru.geekstar.Card;
 import ru.geekstar.Account.Account;
 import ru.geekstar.Account.SberSavingsAccount;
 import ru.geekstar.ClientProfile.SberPhysicalPersonProfile;
+import ru.geekstar.Transaction.PayBonusTransaction;
+import ru.geekstar.Transaction.PayTransaction;
+
+import java.time.LocalDateTime;
 
 public class SberVisaGold extends CardVisa implements IBonusCard {
 
@@ -14,9 +18,27 @@ public class SberVisaGold extends CardVisa implements IBonusCard {
     }
 
     @Override
-    public void payByCardBonuses(float sumPay, int bonusesPay, String buyProductOrService) {
-        // попробуйте реализовать и прислать мне свой вариант
-        // если покажется сложным, то я дам псевдокод в качестве подсказки
+    public void payByCardBonuses(float sumPay, int bonusesPay, String buyProductOrService, String pinCode) {
+        PayBonusTransaction payBonusTransaction = new PayBonusTransaction();
+        payBonusTransaction.setLocalDateTime(LocalDateTime.now());
+        payBonusTransaction.setFromCard(this);
+        payBonusTransaction.setTypeOperation("Оплата бонусами");
+        payBonusTransaction.setBuyProductOrService(buyProductOrService);
+
+        SberPhysicalPersonProfile cardHolder = (SberPhysicalPersonProfile) getCardHolder();
+        if (cardHolder.getBonuses() >= bonusesPay) {
+            int sumPay99 = (int) ((sumPay / 100) * 99);
+            if (bonusesPay > sumPay99) bonusesPay = sumPay99;
+            cardHolder.setBonuses(cardHolder.getBonuses() - bonusesPay);
+            sumPay -= bonusesPay;
+            payBonusTransaction.setStatusOperation("Оплата бонусами прошла успешно");
+        } else payBonusTransaction.setStatusOperation("Недостаточно бонусов");
+
+        payBonusTransaction.setPayBonuses(bonusesPay);
+        payBonusTransaction.setBalanceBonuses(cardHolder.getBonuses());
+        this.getPayCardAccount().getPayTransactions().add(payBonusTransaction);
+
+        payByCard(sumPay, buyProductOrService, pinCode);
     }
 
     @Override
