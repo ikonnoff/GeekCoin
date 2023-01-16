@@ -144,12 +144,12 @@ public abstract class Card implements IPaySystem {
 
         // если валюта покупки и валюта биллинга НЕ совпадают, то конвертируем сумму покупки в валюту платёжной системы по курсу платёжной системы
         // если валюты совпадают, то конвертация не выполняется
-        float sumPayInBillingCurrency = !currencyPayCode.equals(billingCurrencyCode) ? convertToCurrencyExchangeRatePaySystem(sumPay, currencyPayCode, billingCurrencyCode) : sumPay;
+        float sumPayInBillingCurrency = convertToCurrencyExchangeRatePaySystem(sumPay, currencyPayCode, billingCurrencyCode);
 
         // если валюта биллинга и валюта счёта карты не совпадают, то конвертируем сумму покупки в валюте биллинга в валюту карты по курсу нашего банка
         // если валюты совпадают, то конвертация не выполняется
         String cardCurrencyCode = getPayCardAccount().getCurrencyCode();
-        float sumPayInCardCurrency = !billingCurrencyCode.equals(cardCurrencyCode) ? bank.convertToCurrencyExchangeRateBank(sumPayInBillingCurrency, billingCurrencyCode, cardCurrencyCode) : sumPayInBillingCurrency;
+        float sumPayInCardCurrency = bank.convertToCurrencyExchangeRateBank(sumPayInBillingCurrency, billingCurrencyCode, cardCurrencyCode);
 
         // округлим дробную часть до двух знаков после запятой
         sumPayInCardCurrency = bank.round(sumPayInCardCurrency);
@@ -204,7 +204,7 @@ public abstract class Card implements IPaySystem {
                 // определяем валюту карты зачисления
                 String toCurrencyCode = toCard.getPayCardAccount().getCurrencyCode();
                 // если валюты списания и зачисления не совпадают, то конвертировать сумму перевода в валюту карты зачисления по курсу банка
-                if (!fromCurrencyCode.equalsIgnoreCase(toCurrencyCode)) sumTransfer = bank.convertToCurrencyExchangeRateBank(sumTransfer, fromCurrencyCode, toCurrencyCode);
+                sumTransfer = bank.convertToCurrencyExchangeRateBank(sumTransfer, fromCurrencyCode, toCurrencyCode);
 
                 // зачислить на карту
                 boolean topUpStatus = toCard.getPayCardAccount().topUp(sumTransfer);
@@ -281,7 +281,7 @@ public abstract class Card implements IPaySystem {
                     // определяем валюту счёта зачисления
                     String toCurrencyCode = toAccount.getCurrencyCode();
                     // если валюты списания и зачисления не совпадают, то конвертировать сумму перевода в валюту счёта зачисления по курсу банка
-                    if (!fromCurrencyCode.equalsIgnoreCase(toCurrencyCode)) sumTransfer = bank.convertToCurrencyExchangeRateBank(sumTransfer, fromCurrencyCode, toCurrencyCode);
+                    sumTransfer = bank.convertToCurrencyExchangeRateBank(sumTransfer, fromCurrencyCode, toCurrencyCode);
 
                     // и зачислить на счёт
                     boolean topUpStatus = toAccount.topUp(sumTransfer);
