@@ -15,17 +15,6 @@ public abstract class CardVisa extends Card implements IVisa {
         return billingCurrencyCode;
     }
 
-    @Override
-    // Конвертировать в валюту по курсу платёжной системы
-    public float convertToCurrencyExchangeRatePaySystem(float sum, String fromCurrencyCode, String toBillingCurrencyCode) {
-        // запросить курс валюты покупки к курсу валюты биллинга ($) по курсу платёжной системы VISA
-        float exchangeRateCurrencyToBillingCurrency = getExchangeRatePaySystem(fromCurrencyCode, toBillingCurrencyCode);
-        // получаем сумму покупки в валюте биллинга умножив сумму покупки на обменный курс валюты биллинга ($)
-        float sumInBillingCurrency = sum * exchangeRateCurrencyToBillingCurrency;
-
-        return sumInBillingCurrency;
-    }
-
     // Запросить обменный курс валют платёжной системы
     public float getExchangeRatePaySystem(String currency, String currencyExchangeRate) {
         // TODO: Запрос к API Visa
