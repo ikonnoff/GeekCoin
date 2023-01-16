@@ -1,6 +1,7 @@
 package ru.geekstar.PhysicalPerson;
 
 import ru.geekstar.Account.Account;
+import ru.geekstar.Account.PayCardAccount;
 import ru.geekstar.Account.SberPayCardAccount;
 import ru.geekstar.Account.SberSavingsAccount;
 import ru.geekstar.Bank.IBankServicePhysicalPersons;
@@ -11,6 +12,8 @@ import ru.geekstar.Card.IMulticurrencyCard;
 import ru.geekstar.Card.IPaySystem.IPaySystem;
 import ru.geekstar.Card.SberMastercardTravel;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
+
+import java.util.ArrayList;
 
 public class PhysicalPerson {
 
@@ -24,7 +27,7 @@ public class PhysicalPerson {
 
     private char gender;
 
-    private PhysicalPersonProfile physicalPersonProfile;
+    private ArrayList<PhysicalPersonProfile> physicalPersonProfiles = new ArrayList<>();
 
 
     public String getFirstName() {
@@ -67,24 +70,33 @@ public class PhysicalPerson {
         this.gender = gender;
     }
 
-    public PhysicalPersonProfile getPhysicalPersonProfile() {
-        return physicalPersonProfile;
+    public ArrayList<PhysicalPersonProfile> getPhysicalPersonProfiles() {
+        return physicalPersonProfiles;
     }
 
-    public void setPhysicalPersonProfile(PhysicalPersonProfile physicalPersonProfile) {
-        this.physicalPersonProfile = physicalPersonProfile;
+    public void setPhysicalPersonProfiles(ArrayList<PhysicalPersonProfile> physicalPersonProfiles) {
+        this.physicalPersonProfiles = physicalPersonProfiles;
     }
+
+    public PhysicalPersonProfile getPhysicalPersonProfile(IBankServicePhysicalPersons bank) {
+        for (int idProfile = 0; idProfile < physicalPersonProfiles.size(); idProfile++) {
+            PhysicalPersonProfile profile = physicalPersonProfiles.get(idProfile);
+            if (profile.getBank().equals(bank)) return profile;
+        }
+        return null;
+    }
+
 
     public void registerPhysicalPersonToBank(IBankServicePhysicalPersons bank) {
-        setPhysicalPersonProfile(bank.registerPhysicalPersonProfile(this));
+        physicalPersonProfiles.add(bank.registerPhysicalPersonProfile(this));
     }
 
-    public Card openCard(IBankServicePhysicalPersons bank, Card card, String currencyCode, String pinCode) {
-        return bank.openCard(physicalPersonProfile, card, currencyCode, pinCode);
+    public Card openCard(IBankServicePhysicalPersons bank, Card card, PayCardAccount payCardAccount, String currencyCode, String pinCode) {
+        return bank.openCard(getPhysicalPersonProfile(bank), card, payCardAccount, currencyCode, pinCode);
     }
 
     public Account openAccount(IBankServicePhysicalPersons bank, Account account, String currencyCode) {
-        return bank.openAccount(physicalPersonProfile, account, currencyCode);
+        return bank.openAccount(getPhysicalPersonProfile(bank), account, currencyCode);
     }
 
     public void depositingCash2Card(Card toCard, float sumDepositing) {
@@ -143,8 +155,17 @@ public class PhysicalPerson {
         account.displayAccountTransactions();
     }
 
-    public void displayProfileTransactions() {
-        physicalPersonProfile.displayProfileTransactions();
+    public void displayProfileTransactions(IBankServicePhysicalPersons bank) {
+        for (int idProfile = 0; idProfile < physicalPersonProfiles.size(); idProfile++) {
+            PhysicalPersonProfile profile = physicalPersonProfiles.get(idProfile);
+            if (profile.getBank().equals(bank)) profile.displayProfileTransactions();
+        }
+    }
+
+    public void displayAllProfileTransactions() {
+        for (int idProfile = 0; idProfile < physicalPersonProfiles.size(); idProfile++) {
+            physicalPersonProfiles.get(idProfile).displayProfileTransactions();
+        }
     }
 
     public void addAccountToMulticurrencyCard(IMulticurrencyCard multicurrencyCard, String currencyCodeAccount) {
