@@ -5,10 +5,7 @@ import ru.geekstar.Account.SberSavingsAccount;
 import ru.geekstar.Account.TinkoffPayCardAccount;
 import ru.geekstar.Bank.Sberbank;
 import ru.geekstar.Bank.Tinkoff;
-import ru.geekstar.Card.SberMastercardGold;
-import ru.geekstar.Card.SberMastercardTravel;
-import ru.geekstar.Card.SberVisaGold;
-import ru.geekstar.Card.TinkoffBlackMir;
+import ru.geekstar.Card.*;
 import ru.geekstar.PhysicalPerson.PhysicalPerson;
 
 public class Main {
@@ -50,6 +47,7 @@ public class Main {
         I.switchAccountOfMulticurrencyCard(sberMastercardTravel, "USD");
 
         TinkoffBlackMir tinkoffBlackMir = (TinkoffBlackMir) I.openCard(tinkoff, new TinkoffBlackMir(), new TinkoffPayCardAccount(),"RUB", "9834");
+        TinkoffAirlinesMir tinkoffAirlinesMir = (TinkoffAirlinesMir) I.openCard(tinkoff, new TinkoffAirlinesMir(), new TinkoffPayCardAccount(),"RUB", "5727");
 
         SberSavingsAccount mySberSavingsAccount1 = (SberSavingsAccount) I.openAccount(sberbank, new SberSavingsAccount(), "RUB");
         SberSavingsAccount mySberSavingsAccount2 = (SberSavingsAccount) I.openAccount(sberbank, new SberSavingsAccount(), "RUB");
@@ -61,6 +59,7 @@ public class Main {
         I.depositingCash2Card(mySberVisaGold1, 7600.50f);
         I.depositingCash2Card(sberMastercardGold, 2000.00f);
         I.depositingCash2Card(tinkoffBlackMir, 7001.00f);
+        I.depositingCash2Card(tinkoffAirlinesMir, 200000.00f);
 
         I.payByCard(sberMastercardTravel, 3700.00f, "Bike", "Турция", "3957");
         I.payByCard(mySberVisaGold1, 2000.50f, "ЖКХ", "7751");
@@ -70,6 +69,8 @@ public class Main {
         I.payByCard(sberMastercardGold, 200.00f, "Attraction", "Турция", "4837");
         I.payByCardBonuses(mySberVisaGold1, 157.00f, 12, "Starbucks", "7751");
         I.payByCard(tinkoffBlackMir, 1001.00f, "Додо", "9834");
+        I.payByCard(tinkoffAirlinesMir, 105000.00f, "Авиабилеты", "5727");
+        I.payByCardMiles(tinkoffAirlinesMir, 95000.00f, 1, "Авиабилеты", "5727");
 
         I.transferCard2Card(mySberVisaGold1, mySberVisaGold2, 250.00f);
         I.transferCard2Card(mySberVisaGold1, friendSberVisaGold1, 55.00f);
