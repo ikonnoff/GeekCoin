@@ -24,6 +24,8 @@ public class Tinkoff extends Bank implements IBankServicePhysicalPersons {
         tinkoffPhysicalPersonProfile.setLimitPaymentsTransfersDayInUSD(50000.00f);
         tinkoffPhysicalPersonProfile.setLimitPaymentsTransfersDayInEUR(3800.00f);
 
+        tinkoffPhysicalPersonProfile.setPercentCashbackOfSumPay(1.0f);
+
         // установить проценты комиссий
         tinkoffPhysicalPersonProfile.setPercentOfCommissionForPayHousingCommunalServices(2.0f);
         tinkoffPhysicalPersonProfile.setPercentOfCommissionForTransferInRUB(1.0f);
