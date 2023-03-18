@@ -2,11 +2,11 @@ package ru.geekstar.PhysicalPerson;
 
 import ru.geekstar.Account.Account;
 import ru.geekstar.Account.PayCardAccount;
-import ru.geekstar.Account.SberPayCardAccount;
-import ru.geekstar.Account.SberSavingsAccount;
 import ru.geekstar.Bank.IBankServicePhysicalPersons;
-import ru.geekstar.Bank.Sberbank;
-import ru.geekstar.Card.*;
+import ru.geekstar.Card.Card;
+import ru.geekstar.Card.IAirlinesCard;
+import ru.geekstar.Card.IBonusCard;
+import ru.geekstar.Card.IMulticurrencyCard;
 import ru.geekstar.Card.IPaySystem.IPaySystem;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 

@@ -2,9 +2,7 @@ package ru.geekstar.Card;
 
 import ru.geekstar.Account.PayCardAccount;
 import ru.geekstar.Account.SberPayCardAccount;
-import ru.geekstar.Bank.IBankServicePhysicalPersons;
 import ru.geekstar.Bank.Sberbank;
-import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 
 import java.util.ArrayList;
 

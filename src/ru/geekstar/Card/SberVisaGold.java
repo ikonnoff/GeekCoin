@@ -1,10 +1,8 @@
 package ru.geekstar.Card;
 
 import ru.geekstar.Account.Account;
-import ru.geekstar.Account.SberSavingsAccount;
 import ru.geekstar.ClientProfile.SberPhysicalPersonProfile;
 import ru.geekstar.Transaction.PayBonusTransaction;
-import ru.geekstar.Transaction.PayTransaction;
 
 import java.time.LocalDateTime;
 
