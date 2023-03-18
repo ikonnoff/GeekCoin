@@ -153,10 +153,7 @@ public class PhysicalPerson {
     }
 
     public void displayProfileTransactions(IBankServicePhysicalPersons bank) {
-        for (int idProfile = 0; idProfile < physicalPersonProfiles.size(); idProfile++) {
-            PhysicalPersonProfile profile = physicalPersonProfiles.get(idProfile);
-            if (profile.getBank().equals(bank)) profile.displayProfileTransactions();
-        }
+        getPhysicalPersonProfile(bank).displayProfileTransactions();
     }
 
     public void displayAllProfileTransactions() {
