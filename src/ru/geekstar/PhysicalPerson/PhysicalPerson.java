@@ -100,8 +100,8 @@ public class PhysicalPerson {
         physicalPersonProfiles.add(bank.registerPhysicalPersonProfile(this));
     }
 
-    public Card openCard(IBankServicePhysicalPersons bank, Card card, PayCardAccount payCardAccount, String currencyCode, String pinCode) {
-        return bank.openCard(getPhysicalPersonProfile(bank), card, payCardAccount, currencyCode, pinCode);
+    public Card openCard(IBankServicePhysicalPersons bank, Class<? extends Card> classCard, PayCardAccount payCardAccount, String currencyCode, String pinCode) {
+        return bank.openCard(getPhysicalPersonProfile(bank), classCard, payCardAccount, currencyCode, pinCode);
     }
 
     public Account openAccount(IBankServicePhysicalPersons bank, Account account, String currencyCode) {
