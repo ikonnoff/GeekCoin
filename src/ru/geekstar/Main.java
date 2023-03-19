@@ -29,7 +29,6 @@ public class Main {
         SberMastercardGold sberMastercardGold = (SberMastercardGold) I.openCard(sberbank, SberMastercardGold.class, new SberPayCardAccount(), "RUB", "4837");
 
         SberMastercardTravel sberMastercardTravel = (SberMastercardTravel) I.openCard(sberbank, SberMastercardTravel.class, new SberPayCardAccount(), "RUB", "3957");
-        I.addAccountToMulticurrencyCard(sberMastercardTravel, "USD");
         I.switchAccountOfMulticurrencyCard(sberMastercardTravel, "USD");
 
         TinkoffBlackMir tinkoffBlackMir = (TinkoffBlackMir) I.openCard(tinkoff, TinkoffBlackMir.class, new TinkoffPayCardAccount(),"RUB", "9834");
