@@ -31,6 +31,10 @@ public abstract class Bank {
     }
 
 
+    public Bank(String bankName) {
+        this.bankName = bankName;
+    }
+
     // Сгенерировать номер карты 3546 0957 9843 7845
     public String generateNumberCard() {
         byte lengthNumberCard = 20;
