@@ -1,8 +1,14 @@
 package ru.geekstar.Card;
 
+import ru.geekstar.Account.PayCardAccount;
 import ru.geekstar.Card.IPaySystem.IMir;
+import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 
 public abstract class CardMir extends Card implements IMir {
+
+    public CardMir(PhysicalPersonProfile cardHolder, PayCardAccount payCardAccount, String pinCode) {
+        super(cardHolder,payCardAccount,pinCode);
+    }
 
     @Override
     public String getCurrencyCodePaySystem(String country) {

@@ -2,10 +2,7 @@ package ru.geekstar.Card;
 
 import ru.geekstar.Account.Account;
 import ru.geekstar.Account.PayCardAccount;
-import ru.geekstar.Account.SberPayCardAccount;
-import ru.geekstar.Account.SberSavingsAccount;
 import ru.geekstar.Bank.Bank;
-import ru.geekstar.Bank.Sberbank;
 import ru.geekstar.Card.IPaySystem.IPaySystem;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 import ru.geekstar.Transaction.DepositingTransaction;
@@ -81,6 +78,15 @@ public abstract class Card implements IPaySystem {
         this.pinCode = pinCode;
     }
 
+
+    public Card(PhysicalPersonProfile cardHolder, PayCardAccount payCardAccount, String pinCode) {
+        this.bank = cardHolder.getBank();
+        this.cardHolder = cardHolder;
+        this.payCardAccount = payCardAccount;
+        setNumberCard(bank.generateNumberCard());
+        this.statusCard = "Активна";
+        this.pinCode = pinCode;
+    }
 
     // Оплатить картой
     public void payByCard(float sumPay, String buyProductOrService, String pinCode) {

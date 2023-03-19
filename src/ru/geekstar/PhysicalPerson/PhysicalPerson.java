@@ -2,11 +2,11 @@ package ru.geekstar.PhysicalPerson;
 
 import ru.geekstar.Account.Account;
 import ru.geekstar.Account.PayCardAccount;
-import ru.geekstar.Account.SberPayCardAccount;
-import ru.geekstar.Account.SberSavingsAccount;
 import ru.geekstar.Bank.IBankServicePhysicalPersons;
-import ru.geekstar.Bank.Sberbank;
-import ru.geekstar.Card.*;
+import ru.geekstar.Card.Card;
+import ru.geekstar.Card.IAirlinesCard;
+import ru.geekstar.Card.IBonusCard;
+import ru.geekstar.Card.IMulticurrencyCard;
 import ru.geekstar.Card.IPaySystem.IPaySystem;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 
@@ -75,6 +75,19 @@ public class PhysicalPerson {
         this.physicalPersonProfiles = physicalPersonProfiles;
     }
 
+
+    public PhysicalPerson(String firstName, String lastName, String telephone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
+    }
+
+    public PhysicalPerson(String firstName, String lastName, String telephone, byte age, char gender) {
+        this(firstName, lastName, telephone);
+        this.age = age;
+        this.gender = gender;
+    }
+
     public PhysicalPersonProfile getPhysicalPersonProfile(IBankServicePhysicalPersons bank) {
         for (int idProfile = 0; idProfile < physicalPersonProfiles.size(); idProfile++) {
             PhysicalPersonProfile profile = physicalPersonProfiles.get(idProfile);
@@ -83,13 +96,12 @@ public class PhysicalPerson {
         return null;
     }
 
-
     public void registerPhysicalPersonToBank(IBankServicePhysicalPersons bank) {
         physicalPersonProfiles.add(bank.registerPhysicalPersonProfile(this));
     }
 
-    public Card openCard(IBankServicePhysicalPersons bank, Card card, PayCardAccount payCardAccount, String currencyCode, String pinCode) {
-        return bank.openCard(getPhysicalPersonProfile(bank), card, payCardAccount, currencyCode, pinCode);
+    public Card openCard(IBankServicePhysicalPersons bank, Class<? extends Card> classCard, PayCardAccount payCardAccount, String currencyCode, String pinCode) {
+        return bank.openCard(getPhysicalPersonProfile(bank), classCard, payCardAccount, currencyCode, pinCode);
     }
 
     public Account openAccount(IBankServicePhysicalPersons bank, Account account, String currencyCode) {
