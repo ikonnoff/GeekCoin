@@ -75,6 +75,19 @@ public class PhysicalPerson {
         this.physicalPersonProfiles = physicalPersonProfiles;
     }
 
+
+    public PhysicalPerson(String firstName, String lastName, String telephone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
+    }
+
+    public PhysicalPerson(String firstName, String lastName, String telephone, byte age, char gender) {
+        this(firstName, lastName, telephone);
+        this.age = age;
+        this.gender = gender;
+    }
+
     public PhysicalPersonProfile getPhysicalPersonProfile(IBankServicePhysicalPersons bank) {
         for (int idProfile = 0; idProfile < physicalPersonProfiles.size(); idProfile++) {
             PhysicalPersonProfile profile = physicalPersonProfiles.get(idProfile);
@@ -82,7 +95,6 @@ public class PhysicalPerson {
         }
         return null;
     }
-
 
     public void registerPhysicalPersonToBank(IBankServicePhysicalPersons bank) {
         physicalPersonProfiles.add(bank.registerPhysicalPersonProfile(this));
