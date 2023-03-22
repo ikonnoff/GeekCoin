@@ -30,4 +30,11 @@ public interface IMulticurrencyCard {
         }
     }
 
+    default void displayMulticurrencyCardTransactions() {
+        getPayCardAccount().displayAccountTransactions();
+        for (int i = 0; i < getMulticurrencyAccounts().size(); i++) {
+            getMulticurrencyAccounts().get(i).displayAccountTransactions();
+        }
+    }
+
 }

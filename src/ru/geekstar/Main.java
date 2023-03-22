@@ -82,6 +82,9 @@ public class Main {
         I.depositingAccountFromAccount(mySberSavingsAccount1, mySberSavingsAccount2, 25.00f);
 
 /*
+        // Вывод всех операций по всем счетам мультивалютной карты
+        I.displayMulticurrencyCardTransactions(sberMastercardTravel);
+
         System.out.println("Вывод операций по карте " + sberMastercardGold.getNumberCard());
         I.displayCardTransactions(sberMastercardGold);
 
@@ -100,7 +103,8 @@ public class Main {
         // Вывод всех операций по всем картам и счетам профиля клиента с сортировкой по дате и времени
         I.displayProfileTransactions(sberbank);
         friend.displayProfileTransactions(sberbank);
-*/
+
+ */
 
         I.displayAllProfileTransactions();
         friend.displayAllProfileTransactions();
