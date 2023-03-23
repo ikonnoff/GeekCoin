@@ -10,7 +10,7 @@ import ru.geekstar.Transaction.PayMileTransaction;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class TinkoffAirlinesMir extends CardMir implements IAirlinesCard, IMulticurrencyCard {
+public final class TinkoffAirlinesMir extends CardMir implements IAirlinesCard, IMulticurrencyCard {
 
     private ArrayList<PayCardAccount> multicurrencyAccounts = new ArrayList<>();
 

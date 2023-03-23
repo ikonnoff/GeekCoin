@@ -41,7 +41,7 @@ public abstract class PayCardAccount extends Account {
 
 
     // Блокировать сумму на счёте карты
-    public boolean blockSum(float sum) {
+    public final boolean blockSum(float sum) {
         // сохранить сумму на счёте как зарезервированную
         blockedSum += sum;
         // и списать зарезервированную сумму со счёта, чтобы её нельзя было использовать одновременно при совершении других операций
@@ -50,7 +50,7 @@ public abstract class PayCardAccount extends Account {
     }
 
     // Списать зарезервированную сумму со счёта карты
-    public boolean writeOffBlockedSum(float sum) {
+    public final boolean writeOffBlockedSum(float sum) {
         blockedSum -= sum;
         return true;
     }
