@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public final class SberMastercardTravel extends CardMastercard implements IMulticurrencyCard {
 
+    public static int countCards;
+
     private ArrayList<PayCardAccount> multicurrencyAccounts = new ArrayList<>();
 
     @Override
@@ -26,6 +28,7 @@ public final class SberMastercardTravel extends CardMastercard implements IMulti
         super(cardHolder,payCardAccount,pinCode);
         addAccount("USD");
         addAccount("EUR");
+        countCards++;
     }
 
     @Override
