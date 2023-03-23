@@ -1,6 +1,7 @@
 package ru.geekstar.Account;
 
 import ru.geekstar.Card.Card;
+import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 import ru.geekstar.Transaction.PayTransaction;
 
 import java.util.ArrayList;
@@ -39,6 +40,10 @@ public abstract class PayCardAccount extends Account {
         this.blockedSum = blockedSum;
     }
 
+
+    public PayCardAccount(PhysicalPersonProfile accountHolder, String currencyCode) {
+        super(accountHolder, currencyCode);
+    }
 
     // Блокировать сумму на счёте карты
     public final boolean blockSum(float sum) {
