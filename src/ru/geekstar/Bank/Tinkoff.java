@@ -8,8 +8,15 @@ import java.util.ArrayList;
 
 public class Tinkoff extends Bank implements IBankServicePhysicalPersons {
 
+    public static final String TINKOFF;
+
+    static {
+        TINKOFF = "Тинькофф";
+        System.out.println(TINKOFF + " для физических лиц");
+    }
+
     public Tinkoff() {
-        this("Тинькофф");
+        this(TINKOFF);
     }
 
     public Tinkoff(String bankName) {
