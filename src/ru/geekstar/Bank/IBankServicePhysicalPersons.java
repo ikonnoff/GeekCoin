@@ -11,10 +11,10 @@ public interface IBankServicePhysicalPersons {
     PhysicalPersonProfile registerPhysicalPersonProfile(PhysicalPerson physicalPerson);
 
     // Открыть карту
-    default Card openCard(PhysicalPersonProfile physicalPersonProfile, Class<? extends Card> classCard, PayCardAccount payCardAccount, String currencyCode, String pinCode) {
+    default Card openCard(PhysicalPersonProfile physicalPersonProfile, Class<? extends Card> classCard, Class<? extends PayCardAccount> classPayCardAccount, String currencyCode, String pinCode) {
 
         //открыть платёжный счёт
-        PayCardAccount bankPayCardAccount = (PayCardAccount) openAccount(physicalPersonProfile, payCardAccount, currencyCode);
+        PayCardAccount bankPayCardAccount = (PayCardAccount) openAccount(physicalPersonProfile, classPayCardAccount, currencyCode);
 
         Card card = null;
         try {
@@ -34,13 +34,14 @@ public interface IBankServicePhysicalPersons {
     }
 
     // Открыть счёт
-    default Account openAccount(PhysicalPersonProfile physicalPersonProfile, Account account, String currencyCode) {
-        // установить свойства сберегательного счёта
-        account.setBank(physicalPersonProfile.getBank());
-        account.setNumberAccount(Bank.generateNumberAccount());
-        account.setAccountHolder(physicalPersonProfile);
-        account.setCurrencyCode(currencyCode);
-        account.setCurrencySymbol(currencyCode);
+    default Account openAccount(PhysicalPersonProfile physicalPersonProfile, Class<? extends Account> classAccount, String currencyCode) {
+        Account account = null;
+        try {
+            account = classAccount.getConstructor(PhysicalPersonProfile.class, String.class)
+                    .newInstance(physicalPersonProfile, currencyCode);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         // привязать сберегательный счёт к профилю клиента
         physicalPersonProfile.getAccounts().add(account);

@@ -77,7 +77,7 @@ public final class TinkoffAirlinesMir extends CardMir implements IAirlinesCard, 
 
     @Override
     public void addAccount(String currencyCodeAccount) {
-        PayCardAccount payCardAccount = (PayCardAccount) ((Tinkoff) this.getBank()).openAccount(this.getCardHolder(), new TinkoffPayCardAccount(), currencyCodeAccount);
+        PayCardAccount payCardAccount = (PayCardAccount) ((Tinkoff) this.getBank()).openAccount(this.getCardHolder(), TinkoffPayCardAccount.class, currencyCodeAccount);
         payCardAccount.getCards().add(this);
         getMulticurrencyAccounts().add(payCardAccount);
     }
