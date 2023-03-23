@@ -1,6 +1,7 @@
 package ru.geekstar.ClientProfile;
 
 import ru.geekstar.Account.Account;
+import ru.geekstar.Bank.Bank;
 import ru.geekstar.Card.Card;
 import ru.geekstar.PhysicalPerson.PhysicalPerson;
 
@@ -40,6 +41,11 @@ public abstract class PhysicalPersonProfile extends ClientProfile {
         this.accounts = accounts;
     }
 
+
+    public PhysicalPersonProfile(Bank bank, PhysicalPerson physicalPerson) {
+        super(bank);
+        this.physicalPerson = physicalPerson;
+    }
 
     // проверить привязана ли карта к профилю клиента
     public boolean isClientCard(Card card) {

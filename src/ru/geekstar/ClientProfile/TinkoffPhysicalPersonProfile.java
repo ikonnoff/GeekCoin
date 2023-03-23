@@ -1,5 +1,8 @@
 package ru.geekstar.ClientProfile;
 
+import ru.geekstar.Bank.Bank;
+import ru.geekstar.PhysicalPerson.PhysicalPerson;
+
 public class TinkoffPhysicalPersonProfile extends PhysicalPersonProfile {
 
     private float cashback;
@@ -63,6 +66,10 @@ public class TinkoffPhysicalPersonProfile extends PhysicalPersonProfile {
         this.costOf1MileInEUR = costOf1MileInEUR;
     }
 
+
+    public TinkoffPhysicalPersonProfile(Bank bank, PhysicalPerson physicalPerson) {
+        super(bank, physicalPerson);
+    }
 
     @Override
     // Вывод всех операций по всем картам и счетам профиля физического лица в Тинькофф
