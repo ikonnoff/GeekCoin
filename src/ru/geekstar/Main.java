@@ -81,6 +81,15 @@ public class Main {
         I.depositingAccountFromCard(mySberSavingsAccount2, sberMastercardGold, 105.00f);
         I.depositingAccountFromAccount(mySberSavingsAccount1, mySberSavingsAccount2, 25.00f);
 
+        
+        System.out.println("\nКоличество карт в системе: ");
+        System.out.println(SberMastercardGold.class.getSimpleName() + ": " + SberMastercardGold.countCards);
+        System.out.println(SberMastercardTravel.class.getSimpleName() + ": " + SberMastercardTravel.countCards);
+        System.out.println(SberVisaGold.class.getSimpleName() + ": " + SberVisaGold.countCards);
+        System.out.println(TinkoffAirlinesMir.class.getSimpleName() + ": " + TinkoffAirlinesMir.countCards);
+        System.out.println(TinkoffBlackMir.class.getSimpleName() + ": " + TinkoffBlackMir.countCards);
+        System.out.println();
+
 /*
         // Вывод всех операций по всем счетам мультивалютной карты
         I.displayMulticurrencyCardTransactions(sberMastercardTravel);
@@ -105,7 +114,6 @@ public class Main {
         friend.displayProfileTransactions(sberbank);
 
  */
-
         I.displayAllProfileTransactions();
         friend.displayAllProfileTransactions();
 
