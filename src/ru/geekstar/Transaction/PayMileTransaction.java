@@ -1,5 +1,7 @@
 package ru.geekstar.Transaction;
 
+import ru.geekstar.Card.Card;
+
 public class PayMileTransaction extends PayTransaction {
 
     private int payMiles;
@@ -21,6 +23,12 @@ public class PayMileTransaction extends PayTransaction {
 
     public void setBalanceMiles(int balanceMiles) {
         this.balanceMiles = balanceMiles;
+    }
+
+
+    public PayMileTransaction(Card fromCard, String typeOperation, float sumPay, int payMiles, String buyProductOrService) {
+        super(fromCard, typeOperation, sumPay,buyProductOrService);
+        this.payMiles = payMiles;
     }
 
 
