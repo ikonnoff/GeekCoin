@@ -7,7 +7,6 @@ import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 import ru.geekstar.ClientProfile.TinkoffPhysicalPersonProfile;
 import ru.geekstar.Transaction.PayMileTransaction;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public final class TinkoffAirlinesMir extends CardMir implements IAirlinesCard, IMulticurrencyCard {
@@ -53,23 +52,20 @@ public final class TinkoffAirlinesMir extends CardMir implements IAirlinesCard, 
 
     @Override
     public void payByCardMiles(float sumPay, int milesPay, String buyProductOrService, String pinCode) {
-        PayMileTransaction payMileTransaction = new PayMileTransaction();
-        payMileTransaction.setLocalDateTime(LocalDateTime.now());
-        payMileTransaction.setFromCard(this);
-        payMileTransaction.setTypeOperation("Оплата милями");
-        payMileTransaction.setBuyProductOrService(buyProductOrService);
+        PayMileTransaction payMileTransaction = new PayMileTransaction(this, "Оплата милями", sumPay, milesPay, buyProductOrService);
 
         TinkoffPhysicalPersonProfile cardHolder = (TinkoffPhysicalPersonProfile) getCardHolder();
-
-        if (cardHolder.getMiles() >= milesPay) {
+        int balanceMiles = cardHolder.getMiles();
+        if (balanceMiles >= milesPay) {
             if (milesPay > sumPay) milesPay = (int) sumPay;
-            cardHolder.setMiles(cardHolder.getMiles() - milesPay);
+            balanceMiles -= milesPay;
+            cardHolder.setMiles(balanceMiles);
             sumPay -= milesPay;
             payMileTransaction.setStatusOperation("Оплата милями прошла успешно");
         } else payMileTransaction.setStatusOperation("Недостаточно миль");
 
         payMileTransaction.setPayMiles(milesPay);
-        payMileTransaction.setBalanceMiles(cardHolder.getMiles());
+        payMileTransaction.setBalanceMiles(balanceMiles);
         this.getPayCardAccount().getPayTransactions().add(payMileTransaction);
 
         payByCard(sumPay, buyProductOrService, pinCode);

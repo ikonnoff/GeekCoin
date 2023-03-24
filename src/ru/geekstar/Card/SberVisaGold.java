@@ -6,8 +6,6 @@ import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 import ru.geekstar.ClientProfile.SberPhysicalPersonProfile;
 import ru.geekstar.Transaction.PayBonusTransaction;
 
-import java.time.LocalDateTime;
-
 public final class SberVisaGold extends CardVisa implements IBonusCard {
 
     public static int countCards;
@@ -26,23 +24,21 @@ public final class SberVisaGold extends CardVisa implements IBonusCard {
 
     @Override
     public void payByCardBonuses(float sumPay, int bonusesPay, String buyProductOrService, String pinCode) {
-        PayBonusTransaction payBonusTransaction = new PayBonusTransaction();
-        payBonusTransaction.setLocalDateTime(LocalDateTime.now());
-        payBonusTransaction.setFromCard(this);
-        payBonusTransaction.setTypeOperation("Оплата бонусами");
-        payBonusTransaction.setBuyProductOrService(buyProductOrService);
+        PayBonusTransaction payBonusTransaction = new PayBonusTransaction(this, "Оплата бонусами", sumPay,bonusesPay,buyProductOrService);
 
         SberPhysicalPersonProfile cardHolder = (SberPhysicalPersonProfile) getCardHolder();
-        if (cardHolder.getBonuses() >= bonusesPay) {
+        int balanceBonuses = cardHolder.getBonuses();
+        if (balanceBonuses >= bonusesPay) {
             int sumPay99 = (int) ((sumPay / 100) * 99);
             if (bonusesPay > sumPay99) bonusesPay = sumPay99;
-            cardHolder.setBonuses(cardHolder.getBonuses() - bonusesPay);
+            balanceBonuses -= bonusesPay;
+            cardHolder.setBonuses(balanceBonuses);
             sumPay -= bonusesPay;
             payBonusTransaction.setStatusOperation("Оплата бонусами прошла успешно");
         } else payBonusTransaction.setStatusOperation("Недостаточно бонусов");
 
         payBonusTransaction.setPayBonuses(bonusesPay);
-        payBonusTransaction.setBalanceBonuses(cardHolder.getBonuses());
+        payBonusTransaction.setBalanceBonuses(balanceBonuses);
         this.getPayCardAccount().getPayTransactions().add(payBonusTransaction);
 
         payByCard(sumPay, buyProductOrService, pinCode);
