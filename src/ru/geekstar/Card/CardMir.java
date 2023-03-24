@@ -4,6 +4,8 @@ import ru.geekstar.Account.PayCardAccount;
 import ru.geekstar.Card.IPaySystem.IMir;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 
+import java.util.ArrayList;
+
 public abstract class CardMir extends Card implements IMir {
 
     public CardMir(PhysicalPersonProfile cardHolder, PayCardAccount payCardAccount, String pinCode) {
@@ -21,11 +23,14 @@ public abstract class CardMir extends Card implements IMir {
     }
 
     @Override
-    public float getExchangeRatePaySystem(String currency, String currencyExchangeRate) {
+    public ArrayList<Float> getExchangeRatePaySystem(String currency, String currencyExchangeRate) {
         // TODO: Запрос к API Mir
-        float exchangeRate = 0;
+        ArrayList<Float> exchangeRatePaySystem = new ArrayList<>();
         // курс тенге к рублю
-        if (currency.equals("KZT") && currencyExchangeRate.equals("RUB")) exchangeRate = 0.15f;
-        return exchangeRate;
+        if (currency.equals("KZT") && currencyExchangeRate.equals("RUB")) {
+            exchangeRatePaySystem.add(0.15f); // курс покупки
+            exchangeRatePaySystem.add(0.13f); // курс продажи
+        }
+        return exchangeRatePaySystem;
     }
 }
