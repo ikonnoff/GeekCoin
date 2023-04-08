@@ -117,5 +117,9 @@ public class Main {
         I.displayAllProfileTransactions();
         friend.displayAllProfileTransactions();
 
+        I.displayTransactionHistory();
+        friend.displayTransactionHistory();
+
+        I.clearTransactionHistory();
     }
 }
