@@ -6,6 +6,8 @@ import ru.geekstar.Card.Card;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 import ru.geekstar.PhysicalPerson.PhysicalPerson;
 
+import java.lang.reflect.InvocationTargetException;
+
 public interface IBankServicePhysicalPersons {
 
     PhysicalPersonProfile registerPhysicalPersonProfile(PhysicalPerson physicalPerson);
@@ -20,8 +22,14 @@ public interface IBankServicePhysicalPersons {
         try {
             card = classCard.getConstructor(PhysicalPersonProfile.class, PayCardAccount.class, String.class)
                     .newInstance(physicalPersonProfile, bankPayCardAccount, pinCode);
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (NoSuchMethodException noSuchMethodEx) {
+            System.out.println("Конструктор не найден " + noSuchMethodEx.getMessage());
+        } catch (IllegalAccessException illegalAccessEx) {
+            System.out.println("Конструктор недоступен " + illegalAccessEx.getMessage());
+        } catch (InstantiationException instantiationEx) {
+            System.out.println("Невозможно создать объект абстрактного класса " + instantiationEx.getMessage());
+        } catch (InvocationTargetException invocationTargetEx) {
+            System.out.println("Вызываемый конструктор выбросил исключение " + invocationTargetEx.getMessage());
         }
 
         // привязать карту к платёжному счёту
@@ -39,8 +47,14 @@ public interface IBankServicePhysicalPersons {
         try {
             account = classAccount.getConstructor(PhysicalPersonProfile.class, String.class)
                     .newInstance(physicalPersonProfile, currencyCode);
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (NoSuchMethodException noSuchMethodEx) {
+            System.out.println("Конструктор не найден " + noSuchMethodEx.getMessage());
+        } catch (IllegalAccessException illegalAccessEx) {
+            System.out.println("Конструктор недоступен " + illegalAccessEx.getMessage());
+        } catch (InstantiationException instantiationEx) {
+            System.out.println("Невозможно создать объект абстрактного класса " + instantiationEx.getMessage());
+        } catch (InvocationTargetException invocationTargetEx) {
+            System.out.println("Вызываемый конструктор выбросил исключение " + invocationTargetEx.getMessage());
         }
 
         // привязать сберегательный счёт к профилю клиента
