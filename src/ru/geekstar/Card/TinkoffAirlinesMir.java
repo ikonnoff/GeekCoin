@@ -34,6 +34,11 @@ public final class TinkoffAirlinesMir extends CardMir implements IAirlinesCard, 
     }
 
     @Override
+    public int getMiles() {
+        return ((TinkoffPhysicalPersonProfile) getCardHolder()).getMiles();
+    }
+
+    @Override
     public void payByCard(float sumPay, String buyProductOrService, String pinCode) {
         super.payByCard(sumPay, buyProductOrService, pinCode);
         accumulateMiles(sumPay);

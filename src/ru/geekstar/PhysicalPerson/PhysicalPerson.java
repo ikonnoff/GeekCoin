@@ -2,6 +2,7 @@ package ru.geekstar.PhysicalPerson;
 
 import ru.geekstar.Account.Account;
 import ru.geekstar.Account.PayCardAccount;
+import ru.geekstar.Bank.Bank;
 import ru.geekstar.Bank.IBankServicePhysicalPersons;
 import ru.geekstar.Card.Card;
 import ru.geekstar.Card.IAirlinesCard;
@@ -10,6 +11,7 @@ import ru.geekstar.Card.IMulticurrencyCard;
 import ru.geekstar.Card.IPaySystem.IPaySystem;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class PhysicalPerson {
@@ -22,7 +24,7 @@ public class PhysicalPerson {
 
     private String telephone;
 
-    private byte age;
+    private LocalDate dateOfBirth;
 
     private char gender;
 
@@ -53,12 +55,12 @@ public class PhysicalPerson {
         this.telephone = telephone;
     }
 
-    public byte getAge() {
-        return age;
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setAge(byte age) {
-        this.age = age;
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public char getGender() {
@@ -77,7 +79,6 @@ public class PhysicalPerson {
         this.physicalPersonProfiles = physicalPersonProfiles;
     }
 
-
     public PhysicalPerson(String firstName, String lastName, String telephone) {
         personCount++;
         this.firstName = firstName;
@@ -85,10 +86,19 @@ public class PhysicalPerson {
         this.telephone = telephone;
     }
 
-    public PhysicalPerson(String firstName, String lastName, String telephone, byte age, char gender) {
+    public PhysicalPerson(String firstName, String lastName, String telephone, LocalDate dateOfBirth, char gender) {
         this(firstName, lastName, telephone);
-        this.age = age;
+        this.dateOfBirth = dateOfBirth;
         this.gender = gender;
+    }
+
+    public PhysicalPersonProfile getPhysicalPersonProfile(Class<? extends Bank> classBank) {
+        for (int idProfile = 0; idProfile < physicalPersonProfiles.size(); idProfile++) {
+            PhysicalPersonProfile profile = physicalPersonProfiles.get(idProfile);
+            // если объект банка является инстансом (экземпляром класса) classBank, то возвращаем найденный профиль
+            if (classBank.isInstance(profile.getBank())) return profile;
+        }
+        return null;
     }
 
     public PhysicalPersonProfile getPhysicalPersonProfile(IBankServicePhysicalPersons bank) {
@@ -99,8 +109,10 @@ public class PhysicalPerson {
         return null;
     }
 
-    public void registerPhysicalPersonToBank(IBankServicePhysicalPersons bank) {
-        physicalPersonProfiles.add(bank.registerPhysicalPersonProfile(this));
+    public PhysicalPersonProfile registerPhysicalPersonToBank(IBankServicePhysicalPersons bank) {
+        PhysicalPersonProfile physicalPersonProfile = bank.registerPhysicalPersonProfile(this);
+        physicalPersonProfiles.add(physicalPersonProfile);
+        return physicalPersonProfile;
     }
 
     public Card openCard(IBankServicePhysicalPersons bank, Class<? extends Card> classCard, Class<? extends PayCardAccount> classPayCardAccount, String currencyCode, String pinCode) {
@@ -207,6 +219,10 @@ public class PhysicalPerson {
 
     public void payByCardMiles(IAirlinesCard airlinesCard, float sumPay, int milesPay, String buyProductOrService, String pinCode) {
         airlinesCard.payByCardMiles(sumPay, milesPay, buyProductOrService, pinCode);
+    }
+
+    public String toString() {
+        return lastName + " " + firstName;
     }
 
 }
