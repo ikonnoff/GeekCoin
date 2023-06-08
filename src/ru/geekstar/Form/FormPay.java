@@ -1,5 +1,7 @@
 package ru.geekstar.Form;
 
+import ru.geekstar.Account.Account;
+import ru.geekstar.Bank.Bank;
 import ru.geekstar.Card.Card;
 import ru.geekstar.Card.IAirlinesCard;
 import ru.geekstar.Card.IBonusCard;
@@ -26,10 +28,12 @@ public class FormPay {
     private JTextField textFieldSum;
     private JLabel labelSliderMaxBonus;
     private JLabel labelSliderMaxMile;
+    private JLabel labelCurrency;
 
     public JPanel getPanelPay() {
         return panelPay;
     }
+
 
     public FormPay() {
         // делаем компоненты недоступными
@@ -76,7 +80,10 @@ public class FormPay {
         comboBoxCountry.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
+                // делаем видимыми/невидимыми значения ползунков в зависимости от выбранной страны
                 updateSliders();
+                // устанавливаем символ валюты для поля с суммой в зависимости от выбранной страны
+                updateCurrencySymbolSum();
             }
         });
 
@@ -139,6 +146,10 @@ public class FormPay {
                 }
                 // отображаем пин-код для удобства
                 hintPinCode();
+                // сбрасываем значения ползунков
+                updateSliders();
+                // устанавливаем символ валюты для поля с суммой в зависимости от выбранной страны
+                updateCurrencySymbolSum();
             }
         });
 
@@ -149,6 +160,13 @@ public class FormPay {
             }
         });
 
+    }
+
+    public void updateCurrencySymbolSum() {
+        if (comboBoxCountry.getSelectedItem().equals("Россия")) labelCurrency.setText(Bank.getCurrencySymbol("RUB"));
+        if (comboBoxCountry.getSelectedItem().equals("Турция")) labelCurrency.setText(Bank.getCurrencySymbol("TRY"));
+        if (comboBoxCountry.getSelectedItem().equals("Казахстан")) labelCurrency.setText(Bank.getCurrencySymbol("KZT"));
+        if (comboBoxCountry.getSelectedItem().equals("Франция")) labelCurrency.setText(Bank.getCurrencySymbol("EUR"));
     }
 
     public void updateSliders() {

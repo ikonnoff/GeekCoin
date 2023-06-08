@@ -16,6 +16,7 @@ public class FormTransfer {
     private JTextField textFieldSum;
     private JButton buttonTrnasfer;
     private JButton buttonCancel;
+    private JLabel labelCurrency;
 
     public JPanel getPanelTransfer() {
         return panelTransfer;
@@ -83,6 +84,24 @@ public class FormTransfer {
             }
         });
 
+        comboBoxFrom.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                updateCurrencySymbolSum();
+            }
+        });
+    }
+
+    public void updateCurrencySymbolSum() {
+        Object objFrom = comboBoxFrom.getSelectedItem();
+        if (objFrom instanceof Card) {
+            Card cardFrom = (Card) objFrom;
+            labelCurrency.setText(cardFrom.getPayCardAccount().getCurrencySymbol());
+        }
+        if (objFrom instanceof Account) {
+            Account accountFrom = (Account) objFrom;
+            labelCurrency.setText(accountFrom.getCurrencySymbol());
+        }
     }
 
     public void updatePanelTransfer() {

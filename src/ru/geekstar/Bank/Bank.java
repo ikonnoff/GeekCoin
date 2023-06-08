@@ -214,11 +214,22 @@ public abstract class Bank {
     }
 
     // Запросить код валюты по названию страны
-    public String getCurrencyCode(String country) {
+    public static String getCurrencyCode(String country) {
         String currencyPayCode = null;
+        if (country.equalsIgnoreCase("Казахстан")) currencyPayCode = "KZT";
         if (country.equalsIgnoreCase("Турция")) currencyPayCode = "TRY";
         if (country.equalsIgnoreCase("Франция")) currencyPayCode = "EUR";
         return currencyPayCode;
+    }
+
+    // Запросить символ валюты по коду валюты
+    public static String getCurrencySymbol(String currencyCode) {
+        if (currencyCode.equalsIgnoreCase("RUB")) return "₽";
+        if (currencyCode.equalsIgnoreCase("USD")) return "$";
+        if (currencyCode.equalsIgnoreCase("KZT")) return "₸";
+        if (currencyCode.equalsIgnoreCase("TRY")) return "₺";
+        if (currencyCode.equalsIgnoreCase("EUR")) return "€";
+        return "?";
     }
 
     // Конвертировать в валюту по курсу банка
