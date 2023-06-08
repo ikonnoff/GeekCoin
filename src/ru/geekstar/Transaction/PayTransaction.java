@@ -25,9 +25,9 @@ public class PayTransaction extends Transaction {
     public String getStringTransaction() {
         String consumer = getNameCard(getFromCard());
 
-        String transaction = getLocalDateTime() + " " + consumer + "\n" + getTypeOperation() + " " + buyProductOrService + ": -" + getSum() + getCurrencySymbol() +
-                "\nСтатус: " + getStatusOperation() + "\nБаланс: " + getBalance() + getCurrencySymbol() + "\nКомиссия составила: " + getCommission() +
-                getCurrencySymbol() + " Код авторизации: " + getAuthorizationCode();
+        String transaction = getLocalDateTime() + " " + consumer + "\n" + getTypeOperation() + " " + buyProductOrService + ": -" + getSum() + " " + getCurrencySymbol() +
+                "\nСтатус: " + getStatusOperation() + "\nБаланс: " + getBalance() + " " + getCurrencySymbol() + "\nКомиссия составила: " + getCommission() +
+                " " + getCurrencySymbol() + " Код авторизации: " + getAuthorizationCode();
 
         return transaction;
 
