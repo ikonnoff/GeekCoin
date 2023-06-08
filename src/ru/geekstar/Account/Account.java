@@ -137,11 +137,14 @@ public abstract class Account {
 
                     // определяем валюту карты зачисления
                     String toCurrencyCode = toCard.getPayCardAccount().getCurrencyCode();
+
+                    String depositingTypeOperation = "Пополнение " + (!fromCurrencyCode.equals(toCurrencyCode) ? sumTransfer + " " + currencySymbol : "") + " со счёта";
+
                     // если валюты списания и зачисления не совпадают, то конвертировать сумму перевода в валюту карты зачисления по курсу банка
                     sumTransfer = bank.convertToCurrencyExchangeRateBank(sumTransfer, fromCurrencyCode, toCurrencyCode);
 
                     // инициализировать транзакцию пополнения
-                    DepositingTransaction depositingTransaction = new DepositingTransaction(this, toCard, "Перевод со счёта", sumTransfer, toCard.getPayCardAccount().getCurrencySymbol());
+                    DepositingTransaction depositingTransaction = new DepositingTransaction(this, toCard, depositingTypeOperation, sumTransfer, toCard.getPayCardAccount().getCurrencySymbol());
 
                     // зачислить на карту
                     boolean topUpStatus = toCard.getPayCardAccount().topUp(sumTransfer);
@@ -202,11 +205,14 @@ public abstract class Account {
 
                     // определяем валюту счёта зачисления
                     String toCurrencyCode = toAccount.getCurrencyCode();
+
+                    String depositingTypeOperation = "Пополнение " + (!fromCurrencyCode.equals(toCurrencyCode) ? sumTransfer + " " + currencySymbol : "") + " со счёта";
+
                     // если валюты списания и зачисления не совпадают, то конвертировать сумму перевода в валюту счёта зачисления по курсу банка
                     sumTransfer = bank.convertToCurrencyExchangeRateBank(sumTransfer, fromCurrencyCode, toCurrencyCode);
 
                     // инициализировать транзакцию пополнения
-                    DepositingTransaction depositingTransaction = new DepositingTransaction(this, toAccount, "Перевод со счёта", sumTransfer, toAccount.getCurrencySymbol());
+                    DepositingTransaction depositingTransaction = new DepositingTransaction(this, toAccount, depositingTypeOperation, sumTransfer, toAccount.getCurrencySymbol());
 
                     // зачислить на счёт
                     boolean topUpStatus = toAccount.topUp(sumTransfer);
