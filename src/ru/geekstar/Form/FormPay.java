@@ -3,6 +3,7 @@ package ru.geekstar.Form;
 import ru.geekstar.Account.Account;
 import ru.geekstar.Bank.Bank;
 import ru.geekstar.Card.Card;
+import ru.geekstar.Card.CardMir;
 import ru.geekstar.Card.IAirlinesCard;
 import ru.geekstar.Card.IBonusCard;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
@@ -45,7 +46,7 @@ public class FormPay {
         labelSliderMile.setEnabled(false);
         labelSliderMaxMile.setEnabled(false);
 
-        String[] countries = {"Россия", "Турция", "Казахстан"};
+        String[] countries = {"Россия", "Турция", "Казахстан", "Франция"};
         // устанавливаем в выпадающий список массив со странами
         comboBoxCountry.setModel(new DefaultComboBoxModel(countries));
 
@@ -53,7 +54,7 @@ public class FormPay {
         sliderBonus.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                labelSliderBonus.setText("Списать бонусы: " + sliderBonus.getValue());
+                labelSliderBonus.setText(" Списать бонусы: " + sliderBonus.getValue());
             }
         });
 
@@ -61,7 +62,7 @@ public class FormPay {
         sliderMile.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                labelSliderMile.setText("Списать мили: " + sliderMile.getValue());
+                labelSliderMile.setText(" Списать мили: " + sliderMile.getValue());
             }
         });
 
@@ -188,7 +189,7 @@ public class FormPay {
         Card cardFrom = (Card) comboBoxFrom.getSelectedItem();
 
         // если покупка в России
-        if (country.equals("Россия") && cardFrom.getPayCardAccount().getCurrencyCode().equals("RUB")) {
+        if (country.equals("Россия") && cardFrom != null && cardFrom.getPayCardAccount().getCurrencyCode().equals("RUB")) {
             // если карта реализует интерфейс бонусной системы, то отображаем данные о бонусах
             if (cardFrom instanceof IBonusCard) {
                 // явно приводим к типу интерфейса бонусной системы
@@ -240,6 +241,11 @@ public class FormPay {
 
         if (comboBoxFrom.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(panelPay, "Выберите откуда списать");
+            return false;
+        }
+
+        if (comboBoxCountry.getSelectedItem().equals("Франция") && comboBoxFrom.getSelectedItem() instanceof CardMir) {
+            JOptionPane.showMessageDialog(panelPay, "Оплата картой платёжной системы МИР во Франции недоступна");
             return false;
         }
 
