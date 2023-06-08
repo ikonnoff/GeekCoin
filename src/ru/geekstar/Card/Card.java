@@ -183,14 +183,14 @@ public abstract class Card implements IPaySystem {
                 // внести в транзакцию перевода статус списания
                 transferTransaction.setStatusOperation("Списание прошло успешно");
 
-                // инициализировать транзакцию пополнения
-                DepositingTransaction depositingTransaction = new DepositingTransaction(this, toCard, "Пополнение с карты", sumTransfer, toCard.payCardAccount.getCurrencySymbol());
-                depositingTransaction.setAuthorizationCode(authorizationCode);
-
                 // определяем валюту карты зачисления
                 String toCurrencyCode = toCard.getPayCardAccount().getCurrencyCode();
                 // если валюты списания и зачисления не совпадают, то конвертировать сумму перевода в валюту карты зачисления по курсу банка
                 sumTransfer = bank.convertToCurrencyExchangeRateBank(sumTransfer, fromCurrencyCode, toCurrencyCode);
+
+                // инициализировать транзакцию пополнения
+                DepositingTransaction depositingTransaction = new DepositingTransaction(this, toCard, "Пополнение с карты", sumTransfer, toCard.payCardAccount.getCurrencySymbol());
+                depositingTransaction.setAuthorizationCode(authorizationCode);
 
                 // зачислить на карту
                 boolean topUpStatus = toCard.getPayCardAccount().topUp(sumTransfer);
@@ -249,13 +249,14 @@ public abstract class Card implements IPaySystem {
                 if (withdrawalStatus) {
                     // внести в транзакцию статус списания
                     transferTransaction.setStatusOperation("Списание прошло успешно");
-                    // инициализировать транзакцию пополнения
-                    DepositingTransaction depositingTransaction = new DepositingTransaction(this, toAccount, "Пополнение с карты", sumTransfer, toAccount.getCurrencySymbol());
 
                     // определяем валюту счёта зачисления
                     String toCurrencyCode = toAccount.getCurrencyCode();
                     // если валюты списания и зачисления не совпадают, то конвертировать сумму перевода в валюту счёта зачисления по курсу банка
                     sumTransfer = bank.convertToCurrencyExchangeRateBank(sumTransfer, fromCurrencyCode, toCurrencyCode);
+
+                    // инициализировать транзакцию пополнения
+                    DepositingTransaction depositingTransaction = new DepositingTransaction(this, toAccount, "Пополнение с карты", sumTransfer, toAccount.getCurrencySymbol());
 
                     // и зачислить на счёт
                     boolean topUpStatus = toAccount.topUp(sumTransfer);
