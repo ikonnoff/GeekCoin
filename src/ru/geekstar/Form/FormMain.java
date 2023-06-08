@@ -115,6 +115,7 @@ public class FormMain extends JDialog {
         buttonDepositing.setEnabled(false);
 
         // делаем кнопки невидимыми
+        labelNameClient.setVisible(false);
         labelSwitchAccountForCard.setVisible(false);
         comboBoxAccountsCard.setVisible(false);
         labelAddAccountForCard.setVisible(false);
@@ -122,9 +123,9 @@ public class FormMain extends JDialog {
         buttonAddAccountForCard.setVisible(false);
 
         // заглушка для пропуска формы регистрации
-        PhysicalPerson I = new PhysicalPerson("Игорь", "Коннов", "+79277394841", LocalDate.of(1990, 6, 7), 'M');
+        //PhysicalPerson I = new PhysicalPerson("Игорь", "Коннов", "+79277394841", LocalDate.of(1990, 6, 7), 'M');
         // установить и отобразить на главной форме зарегистрированного пользователя
-        initPhysicalPerson(I);
+        //initPhysicalPerson(I);
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -245,6 +246,7 @@ public class FormMain extends JDialog {
         ImageIcon iconUser = new ImageIcon(getClass().getResource(File.separator + "resources" + File.separator + "User.png"));
         labelNameClient.setIcon(iconUser);
         labelNameClient.setText(physicalPerson.getFirstName() + " " + physicalPerson.getLastName());
+        labelNameClient.setVisible(true);
 
         // делаем кнопку регистрации невидимой
         buttonRegistration.setVisible(false);
