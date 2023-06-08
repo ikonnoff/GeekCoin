@@ -27,14 +27,14 @@ public class FormDepositing {
         buttonDepositing.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // проверяем заполнены ли все обязательные поля
+                // если хоть одно поле не заполнено, то происходит return (выход из метода)
+                if (!checkFillFields()) return;
+
                 // извлекаем данные, которые указал пользователь
                 Object objFrom = comboBoxFrom.getSelectedItem();
                 Object objTo = comboBoxTo.getSelectedItem();
                 float sumDepositing = Float.valueOf(textFieldSum.getText());
-
-                // проверяем заполнены ли все обязательные поля
-                // если хоть одно поле не заполнено, то происходит return (выход из метода)
-                if (!checkFillFields()) return;
 
                 // если пополнение через банкомат
                 if (objFrom.equals("Банкомат")) {
