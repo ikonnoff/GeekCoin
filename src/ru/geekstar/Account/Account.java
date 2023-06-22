@@ -283,7 +283,7 @@ public abstract class Account {
     }
 
     // Списать со счёта
-    private final boolean writeOff(float sum) {
+    private synchronized final boolean writeOff(float sum) {
         return setBalance(balance - sum);
     }
 
