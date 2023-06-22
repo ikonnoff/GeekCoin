@@ -10,6 +10,7 @@ import ru.geekstar.Card.IBonusCard;
 import ru.geekstar.Card.IMulticurrencyCard;
 import ru.geekstar.Card.IPaySystem.IPaySystem;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
+import ru.geekstar.ThreadJobs.PayByCardRunnable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -128,11 +129,15 @@ public class PhysicalPerson {
     }
 
     public void payByCard(Card card, float sumPay, String buyProductOrService, String pinCode) {
-        card.payByCard(sumPay, buyProductOrService, pinCode);
+        Runnable payByCardJob = new PayByCardRunnable(card, sumPay, buyProductOrService, pinCode);
+        Thread threadPayByCard = new Thread(payByCardJob);
+        threadPayByCard.start();
     }
 
     public void payByCard(Card card, float sumPay, String buyProductOrService, String country, String pinCode) {
-        card.payByCard(sumPay, buyProductOrService, country, pinCode);
+        Runnable payByCardJob = new PayByCardRunnable(card, sumPay, buyProductOrService, country, pinCode);
+        Thread threadPayByCard = new Thread(payByCardJob);
+        threadPayByCard.start();
     }
 
     public void transferCard2Card(Card fromCard, Card toCard, float sumTransfer) {
