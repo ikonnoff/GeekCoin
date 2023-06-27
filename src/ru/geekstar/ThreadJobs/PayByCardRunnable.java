@@ -2,35 +2,30 @@ package ru.geekstar.ThreadJobs;
 
 import ru.geekstar.Card.Card;
 
-public class PayByCardRunnable implements Runnable {
+public class PayByCardRunnable extends Operations implements Runnable {
 
-    private Card card;
+    protected String buyProductOrService;
 
-    private float sumPay;
+    protected String country;
 
-    private String buyProductOrService;
-
-    private String country;
-
-    private String pinCode;
+    protected String pinCode;
 
 
-    public PayByCardRunnable(Card card, float sumPay, String buyProductOrService, String pinCode) {
-        this.card = card;
-        this.sumPay = sumPay;
+    public PayByCardRunnable(Card fromCard, float sumPay, String buyProductOrService, String pinCode) {
+        super(fromCard, sumPay);
         this.buyProductOrService = buyProductOrService;
         this.pinCode = pinCode;
     }
 
-    public PayByCardRunnable(Card card, float sumPay, String buyProductOrService, String country, String pinCode) {
-        this(card, sumPay, buyProductOrService, pinCode);
+    public PayByCardRunnable(Card fromCard, float sumPay, String buyProductOrService, String country, String pinCode) {
+        this(fromCard, sumPay, buyProductOrService, pinCode);
         this.country = country;
     }
 
     @Override
     public void run() {
-        if (country == null) card.payByCard(sumPay, buyProductOrService, pinCode);
-        else card.payByCard(sumPay, buyProductOrService, country, pinCode);
+        if (country == null) fromCard.payByCard(sum, buyProductOrService, pinCode);
+        else fromCard.payByCard(sum, buyProductOrService, country, pinCode);
     }
 
 }
