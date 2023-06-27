@@ -16,6 +16,11 @@ public final class SberVisaGold extends CardVisa implements IBonusCard {
     }
 
     @Override
+    public int getBonuses() {
+        return ((SberPhysicalPersonProfile) getCardHolder()).getBonuses();
+    }
+
+    @Override
     public void accumulateBonuses(float sumPay) {
         SberPhysicalPersonProfile cardHolder = (SberPhysicalPersonProfile) getCardHolder();
         int bonuses = Math.round((sumPay/100) * cardHolder.getPercentBonusOfSumPay());

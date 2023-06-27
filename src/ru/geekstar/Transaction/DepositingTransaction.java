@@ -58,8 +58,8 @@ public class DepositingTransaction extends Transaction {
     @Override
     public String getStringTransaction() {
 
-        String transaction = getLocalDateTime() + " " + getRecipient() + " " + getTypeOperation() + (!getSender().isEmpty() ? " " + getSender() : "") + ": +" + getSum() + getCurrencySymbol() +
-                " Статус: " +  getStatusOperation() + " Баланс: " + getBalance() + getCurrencySymbol() + " Комиссия составила: " + getCommission() +
+        String transaction = getLocalDateTime() + " " + getRecipient() + "\n" + getTypeOperation() + (!getSender().isEmpty() ? " " + getSender() : "") + ": +" + getSum() + getCurrencySymbol() +
+                "\nСтатус: " +  getStatusOperation() + "\nБаланс: " + getBalance() + getCurrencySymbol() + "\nКомиссия составила: " + getCommission() +
                 getCurrencySymbol() + (getAuthorizationCode() != null ? " Код авторизации: " + getAuthorizationCode() : "");
 
         return transaction;

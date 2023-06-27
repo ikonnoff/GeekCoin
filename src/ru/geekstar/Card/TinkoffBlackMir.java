@@ -15,6 +15,11 @@ public final class TinkoffBlackMir extends CardMir implements ICashbackCard {
     }
 
     @Override
+    public float getCashback() {
+        return ((TinkoffPhysicalPersonProfile) getCardHolder()).getCashback();
+    }
+
+    @Override
     public void payByCard(float sumPay, String buyProductOrService, String pinCode) {
         super.payByCard(sumPay, buyProductOrService, pinCode);
         accumulateCashback(sumPay);

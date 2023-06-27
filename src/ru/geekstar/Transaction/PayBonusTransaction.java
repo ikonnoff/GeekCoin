@@ -35,8 +35,9 @@ public class PayBonusTransaction extends PayTransaction {
     public String getStringTransaction() {
         String consumer = getNameCard(getFromCard());
 
-        String transaction = getLocalDateTime() + " " + consumer + " " + getTypeOperation() + " " + getBuyProductOrService() + ": -" + payBonuses +
-                " бонусов Статус: " + getStatusOperation() + " Доступно бонусов: " + balanceBonuses;
+        String transaction = getLocalDateTime() + " " + consumer + " " +
+                "\n" + getTypeOperation() + " " + getBuyProductOrService() + ": -" + payBonuses + " бонусов " +
+                "\nСтатус: " + getStatusOperation()+ "\nДоступно бонусов: " + balanceBonuses;
 
         return transaction;
 
