@@ -259,7 +259,7 @@ public abstract class Account {
     }
 
     // Пополнить баланс
-    public final boolean topUp(float sum) {
+    public synchronized final boolean topUp(float sum) {
         setBalance(balance + sum);
         return true;
     }
@@ -283,7 +283,7 @@ public abstract class Account {
     }
 
     // Списать со счёта
-    private final boolean writeOff(float sum) {
+    private synchronized final boolean writeOff(float sum) {
         return setBalance(balance - sum);
     }
 

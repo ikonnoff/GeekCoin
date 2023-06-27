@@ -31,7 +31,7 @@ public abstract class SavingsAccount extends Account {
     // Начислить проценты на остаток в конце месяца
     public void chargePercentOnBalanceEndMonth() {
         // TODO: если 00:00 1-ого числа месяца, то
-            setBalance(getBalance() + percentOfBalanceDay);
+            topUp(percentOfBalanceDay);
             percentOfBalance = 0;
     }
 
