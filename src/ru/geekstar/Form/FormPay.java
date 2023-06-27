@@ -1,6 +1,9 @@
 package ru.geekstar.Form;
 
+import ru.geekstar.Account.Account;
+import ru.geekstar.Bank.Bank;
 import ru.geekstar.Card.Card;
+import ru.geekstar.Card.CardMir;
 import ru.geekstar.Card.IAirlinesCard;
 import ru.geekstar.Card.IBonusCard;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
@@ -26,10 +29,12 @@ public class FormPay {
     private JTextField textFieldSum;
     private JLabel labelSliderMaxBonus;
     private JLabel labelSliderMaxMile;
+    private JLabel labelCurrency;
 
     public JPanel getPanelPay() {
         return panelPay;
     }
+
 
     public FormPay() {
         // делаем компоненты недоступными
@@ -41,7 +46,7 @@ public class FormPay {
         labelSliderMile.setEnabled(false);
         labelSliderMaxMile.setEnabled(false);
 
-        String[] countries = {"Россия", "Турция", "Казахстан"};
+        String[] countries = {"Россия", "Турция", "Казахстан", "Франция"};
         // устанавливаем в выпадающий список массив со странами
         comboBoxCountry.setModel(new DefaultComboBoxModel(countries));
 
@@ -49,7 +54,7 @@ public class FormPay {
         sliderBonus.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                labelSliderBonus.setText("Списать бонусы: " + sliderBonus.getValue());
+                labelSliderBonus.setText(" Списать бонусы: " + sliderBonus.getValue());
             }
         });
 
@@ -57,7 +62,7 @@ public class FormPay {
         sliderMile.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                labelSliderMile.setText("Списать мили: " + sliderMile.getValue());
+                labelSliderMile.setText(" Списать мили: " + sliderMile.getValue());
             }
         });
 
@@ -76,7 +81,10 @@ public class FormPay {
         comboBoxCountry.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
+                // делаем видимыми/невидимыми значения ползунков в зависимости от выбранной страны
                 updateSliders();
+                // устанавливаем символ валюты для поля с суммой в зависимости от выбранной страны
+                updateCurrencySymbolSum();
             }
         });
 
@@ -139,6 +147,10 @@ public class FormPay {
                 }
                 // отображаем пин-код для удобства
                 hintPinCode();
+                // сбрасываем значения ползунков
+                updateSliders();
+                // устанавливаем символ валюты для поля с суммой в зависимости от выбранной страны
+                updateCurrencySymbolSum();
             }
         });
 
@@ -149,6 +161,13 @@ public class FormPay {
             }
         });
 
+    }
+
+    public void updateCurrencySymbolSum() {
+        if (comboBoxCountry.getSelectedItem().equals("Россия")) labelCurrency.setText(Bank.getCurrencySymbol("RUB"));
+        if (comboBoxCountry.getSelectedItem().equals("Турция")) labelCurrency.setText(Bank.getCurrencySymbol("TRY"));
+        if (comboBoxCountry.getSelectedItem().equals("Казахстан")) labelCurrency.setText(Bank.getCurrencySymbol("KZT"));
+        if (comboBoxCountry.getSelectedItem().equals("Франция")) labelCurrency.setText(Bank.getCurrencySymbol("EUR"));
     }
 
     public void updateSliders() {
@@ -170,7 +189,7 @@ public class FormPay {
         Card cardFrom = (Card) comboBoxFrom.getSelectedItem();
 
         // если покупка в России
-        if (country.equals("Россия") && cardFrom.getPayCardAccount().getCurrencyCode().equals("RUB")) {
+        if (country.equals("Россия") && cardFrom != null && cardFrom.getPayCardAccount().getCurrencyCode().equals("RUB")) {
             // если карта реализует интерфейс бонусной системы, то отображаем данные о бонусах
             if (cardFrom instanceof IBonusCard) {
                 // явно приводим к типу интерфейса бонусной системы
@@ -222,6 +241,11 @@ public class FormPay {
 
         if (comboBoxFrom.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(panelPay, "Выберите откуда списать");
+            return false;
+        }
+
+        if (comboBoxCountry.getSelectedItem().equals("Франция") && comboBoxFrom.getSelectedItem() instanceof CardMir) {
+            JOptionPane.showMessageDialog(panelPay, "Оплата картой платёжной системы МИР во Франции недоступна");
             return false;
         }
 

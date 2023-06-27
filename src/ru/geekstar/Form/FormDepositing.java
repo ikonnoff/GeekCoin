@@ -6,10 +6,7 @@ import ru.geekstar.Card.Card;
 import ru.geekstar.ClientProfile.PhysicalPersonProfile;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class FormDepositing {
@@ -19,23 +16,25 @@ public class FormDepositing {
     private JTextField textFieldSum;
     private JButton buttonDepositing;
     private JButton buttonCancel;
+    private JLabel labelCurrency;
 
     public JPanel getPanelDepositing() {
         return panelDepositing;
     }
 
+
     public FormDepositing() {
         buttonDepositing.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // проверяем заполнены ли все обязательные поля
+                // если хоть одно поле не заполнено, то происходит return (выход из метода)
+                if (!checkFillFields()) return;
+
                 // извлекаем данные, которые указал пользователь
                 Object objFrom = comboBoxFrom.getSelectedItem();
                 Object objTo = comboBoxTo.getSelectedItem();
                 float sumDepositing = Float.valueOf(textFieldSum.getText());
-
-                // проверяем заполнены ли все обязательные поля
-                // если хоть одно поле не заполнено, то происходит return (выход из метода)
-                if (!checkFillFields()) return;
 
                 // если пополнение через банкомат
                 if (objFrom.equals("Банкомат")) {
@@ -105,12 +104,48 @@ public class FormDepositing {
             }
         });
 
+        comboBoxFrom.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                updateCurrencySymbolSum();
+            }
+        });
+
+        comboBoxTo.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                updateCurrencySymbolSum();
+            }
+        });
+
         buttonCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 FormMain.formMain.displayPanelMain();
             }
         });
+    }
+
+    public void updateCurrencySymbolSum() {
+        Object objFrom = comboBoxFrom.getSelectedItem();
+
+        if (objFrom != null && objFrom.equals("Банкомат")) {
+            Object objTo = comboBoxTo.getSelectedItem();
+            if (objTo instanceof Card) {
+                Card cardTo = (Card) objTo;
+                labelCurrency.setText(cardTo.getPayCardAccount().getCurrencySymbol());
+            } else labelCurrency.setText("");
+        }
+
+        if (objFrom instanceof Card) {
+            Card cardFrom = (Card) objFrom;
+            labelCurrency.setText(cardFrom.getPayCardAccount().getCurrencySymbol());
+        }
+
+        if (objFrom instanceof Account) {
+            Account accountFrom = (Account) objFrom;
+            labelCurrency.setText(accountFrom.getCurrencySymbol());
+        }
     }
 
     public void updatePanelDepositing() {

@@ -61,19 +61,51 @@ public class Tinkoff extends Bank implements IBankServicePhysicalPersons {
 
     @Override
     public ArrayList<Float> getExchangeRateBank(String currency, String currencyExchangeRate) {
+        // TODO: Запрос к API банка
         ArrayList<Float> exchangeRateBank = new ArrayList<>();
-        // курс доллара к рублю
-        if (currency.equals("USD") && currencyExchangeRate.equals("RUB")) {
-            exchangeRateBank.add(63.18f); // курс покупки
-            exchangeRateBank.add(60.48f); // курс продажи
+
+        // курс доллара
+        if (currency.equals("USD")) {
+            // в рублях
+            if (currencyExchangeRate.equals("RUB")) {
+                exchangeRateBank.add(79.1f); // курс покупки
+                exchangeRateBank.add(84.85f); // курс продажи
+            }
+            // в евро
+            if (currencyExchangeRate.equals("EUR")) {
+                exchangeRateBank.add(0.88f);
+                exchangeRateBank.add(0.97f);
+            }
         }
-        // курс евро к рублю
-        if (currency.equals("EUR") && currencyExchangeRate.equals("RUB")) {
-            exchangeRateBank.add(64.15f); // курс покупки
-            exchangeRateBank.add(61.35f); // курс продажи
+
+        // курс евро
+        if (currency.equals("EUR")) {
+            // в рублях
+            if (currencyExchangeRate.equals("RUB")) {
+                exchangeRateBank.add(85.15f);
+                exchangeRateBank.add(91.4f);
+            }
+            // в долларах
+            if (currencyExchangeRate.equals("USD")) {
+                exchangeRateBank.add(1.02f);
+                exchangeRateBank.add(1.13f);
+            }
         }
+
+        // курс рубля
+        if (currency.equals("RUB")) {
+            // в долларах
+            if (currencyExchangeRate.equals("USD")) {
+                exchangeRateBank.add(0.0117f);
+                exchangeRateBank.add(0.0126f);
+            }
+            // в евро
+            if (currencyExchangeRate.equals("EUR")) {
+                exchangeRateBank.add(0.0109f);
+                exchangeRateBank.add(0.0117f);
+            }
+        }
+
         return exchangeRateBank;
     }
-
-
 }

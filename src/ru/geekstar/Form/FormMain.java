@@ -115,6 +115,7 @@ public class FormMain extends JDialog {
         buttonDepositing.setEnabled(false);
 
         // делаем кнопки невидимыми
+        labelNameClient.setVisible(false);
         labelSwitchAccountForCard.setVisible(false);
         comboBoxAccountsCard.setVisible(false);
         labelAddAccountForCard.setVisible(false);
@@ -245,6 +246,7 @@ public class FormMain extends JDialog {
         ImageIcon iconUser = new ImageIcon(getClass().getResource(File.separator + "resources" + File.separator + "User.png"));
         labelNameClient.setIcon(iconUser);
         labelNameClient.setText(physicalPerson.getFirstName() + " " + physicalPerson.getLastName());
+        labelNameClient.setVisible(true);
 
         // делаем кнопку регистрации невидимой
         buttonRegistration.setVisible(false);

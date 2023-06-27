@@ -17,12 +17,10 @@ import java.util.ArrayList;
 
 public class FromOpenCard {
     private JPanel panelOpenCard;
-    private JButton buttonOpenCard;
     private JButton buttonCancel;
     private JScrollPane scrollPaneCards;
     private JPanel panelCards;
     private JLabel labelNameOpenCard;
-    private Class nameClassSelectedCard;
 
     public JPanel getPanelOpenCard() {
         return panelOpenCard;
@@ -65,11 +63,11 @@ public class FromOpenCard {
                 public void mouseClicked(MouseEvent e) {
                     // слушатель срабатывает в случае клика по labelIconCard
                     super.mouseClicked(e);
-                    // при клике по карте выводим название карты, которую выбрал пользователь
-                    labelNameOpenCard.setText("Хочу открыть " + labelIconCard.getText());
                     try {
                         // определяем класс карты, по которой кликнул пользователь
-                        nameClassSelectedCard = Class.forName(nameClassCard.getPackageName() + "." + labelIconCard.getText());
+                        Class nameClassSelectedCard = Class.forName(nameClassCard.getPackageName() + "." + labelIconCard.getText());
+                        // открываем карту
+                        openCard(nameClassSelectedCard);
                     } catch (ClassNotFoundException classNotFoundEx) {
                         System.out.println("Класс не найден");
                     }
@@ -84,70 +82,55 @@ public class FromOpenCard {
             }
         });
 
-        buttonOpenCard.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // если пользователь ещё не выбрал карту, то призываем его это сделать и прерываем выполнение метода return (выход из метода)
-                if (nameClassSelectedCard == null) {
-                    JOptionPane.showMessageDialog(panelOpenCard, "Выберите карту");
-                    return;
-                }
-
-                Class classBank = null;
-                Class classPayCardAccount = null;
-
-                // если имя выбранной пользователем карты содержит "Sber", то определяем классы банка и счёта
-                if (nameClassSelectedCard.getSimpleName().contains("Sber")) {
-                    classBank = Sberbank.class;
-                    classPayCardAccount = SberPayCardAccount.class;
-                }
-                // если имя выбранной пользователем карты содержит "Tinkoff", то определяем классы банка и счёта
-                if (nameClassSelectedCard.getSimpleName().contains("Tinkoff")) {
-                    classBank = Tinkoff.class;
-                    classPayCardAccount = TinkoffPayCardAccount.class;
-                }
-
-                IBankServicePhysicalPersons bank = null;
-                // определяем профиль физ. лица по классу банка выбранной пользователем карты
-                PhysicalPersonProfile profile = FormMain.physicalPerson.getPhysicalPersonProfile(classBank);
-                // если профиль не найден, то создаёи объект банка и регистрируем пользователя в банке
-                if (profile == null) {
-                    try {
-                        // вызываем конструктор банка по умолчанию
-                        bank = (IBankServicePhysicalPersons) classBank.getConstructor().newInstance();
-                    } catch (NoSuchMethodException noSuchMethodEx) {
-                        System.out.println("Конструктор не найден " + noSuchMethodEx.getMessage());
-                    } catch (IllegalAccessException illegalAccessEx) {
-                        System.out.println("Конструктор недоступен " + illegalAccessEx.getMessage());
-                    } catch (InstantiationException instantiationEx) {
-                        System.out.println("Невозможно создать объект абстрактного класса " + instantiationEx.getMessage());
-                    } catch (InvocationTargetException invocationTargetEx) {
-                        System.out.println("Вызываемый конструктор выбросил исключение " + invocationTargetEx.getMessage());
-                    }
-                    // регистрируем пользователя в банке и создаём для него профиль
-                    FormMain.physicalPerson.registerPhysicalPersonToBank(bank);
-                // иначе получаем объект банка из профиля
-                } else bank = (IBankServicePhysicalPersons) profile.getBank();
-
-                // вызваем метод банка для создания объекта карты, то есть для открытия карты
-                FormMain.physicalPerson.openCard(bank, nameClassSelectedCard, classPayCardAccount,"RUB", Bank.generatePinCode());
-                // отображаем панель со статусом операции
-                FormMain.formMain.displayPanelStatus("Карта открыта");
-            }
-        });
-
-        // слушатель срабатывает в момент показа компонента panelOpenCard
-        panelOpenCard.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-                super.componentShown(e);
-                // сбрасываем до значений по умолчанию
-                labelNameOpenCard.setText("Выберите карту двойным кликом");
-                nameClassSelectedCard = null;
-            }
-        });
     }
 
+    public void openCard(Class nameClassSelectedCard) {
+        // если пользователь ещё не выбрал карту, то призываем его это сделать и прерываем выполнение метода return (выход из метода)
+        if (nameClassSelectedCard == null) {
+            JOptionPane.showMessageDialog(panelOpenCard, "Выберите карту");
+            return;
+        }
 
+        Class classBank = null;
+        Class classPayCardAccount = null;
+
+        // если имя выбранной пользователем карты содержит "Sber", то определяем классы банка и счёта
+        if (nameClassSelectedCard.getSimpleName().contains("Sber")) {
+            classBank = Sberbank.class;
+            classPayCardAccount = SberPayCardAccount.class;
+        }
+        // если имя выбранной пользователем карты содержит "Tinkoff", то определяем классы банка и счёта
+        if (nameClassSelectedCard.getSimpleName().contains("Tinkoff")) {
+            classBank = Tinkoff.class;
+            classPayCardAccount = TinkoffPayCardAccount.class;
+        }
+
+        IBankServicePhysicalPersons bank = null;
+        // определяем профиль физ. лица по классу банка выбранной пользователем карты
+        PhysicalPersonProfile profile = FormMain.physicalPerson.getPhysicalPersonProfile(classBank);
+        // если профиль не найден, то создаёи объект банка и регистрируем пользователя в банке
+        if (profile == null) {
+            try {
+                // вызываем конструктор банка по умолчанию
+                bank = (IBankServicePhysicalPersons) classBank.getConstructor().newInstance();
+            } catch (NoSuchMethodException noSuchMethodEx) {
+                System.out.println("Конструктор не найден " + noSuchMethodEx.getMessage());
+            } catch (IllegalAccessException illegalAccessEx) {
+                System.out.println("Конструктор недоступен " + illegalAccessEx.getMessage());
+            } catch (InstantiationException instantiationEx) {
+                System.out.println("Невозможно создать объект абстрактного класса " + instantiationEx.getMessage());
+            } catch (InvocationTargetException invocationTargetEx) {
+                System.out.println("Вызываемый конструктор выбросил исключение " + invocationTargetEx.getMessage());
+            }
+            // регистрируем пользователя в банке и создаём для него профиль
+            FormMain.physicalPerson.registerPhysicalPersonToBank(bank);
+            // иначе получаем объект банка из профиля
+        } else bank = (IBankServicePhysicalPersons) profile.getBank();
+
+        // вызваем метод банка для создания объекта карты, то есть для открытия карты
+        FormMain.physicalPerson.openCard(bank, nameClassSelectedCard, classPayCardAccount,"RUB", Bank.generatePinCode());
+        // отображаем панель со статусом операции
+        FormMain.formMain.displayPanelStatus("Карта открыта");
+    }
 
 }
