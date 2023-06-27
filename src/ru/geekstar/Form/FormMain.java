@@ -123,9 +123,9 @@ public class FormMain extends JDialog {
         buttonAddAccountForCard.setVisible(false);
 
         // заглушка для пропуска формы регистрации
-        // PhysicalPerson I = new PhysicalPerson("Игорь", "Коннов", "+79277394841", LocalDate.of(1990, 6, 7), 'M');
+        PhysicalPerson I = new PhysicalPerson("Игорь", "Коннов", "+79277394841", LocalDate.of(1990, 6, 7), 'M');
         // установить и отобразить на главной форме зарегистрированного пользователя
-        // initPhysicalPerson(I);
+        initPhysicalPerson(I);
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
